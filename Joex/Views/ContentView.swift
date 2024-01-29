@@ -10,6 +10,9 @@ import SwiftData
 
 struct ContentView: View {
     @Query private var logEntries: [LogEntry]
+    @State private var newNote: Bool = false
+    @State private var migration: Bool = false
+    @State private var newVoiceMemo: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -24,7 +27,11 @@ struct ContentView: View {
                 
                 HStack {
                     Button {
-                        
+                        if newNote {
+                            newNote = false
+                        } else {
+                            newNote = true
+                        }
                     } label: {
                         Image(systemName: "note.text")
                             .font(.system(size: 20).weight(.semibold))
@@ -37,7 +44,11 @@ struct ContentView: View {
                     .padding([.trailing], 5)
                     
                     Button {
-                        
+                        if migration {
+                            migration = false
+                        } else {
+                            migration = true
+                        }
                     } label: {
                         Image(systemName: "book.pages")
                             .font(.system(size: 20).weight(.black))
@@ -50,7 +61,11 @@ struct ContentView: View {
                     .padding([.leading, .trailing], 5)
                     
                     Button {
-                        
+                        if newVoiceMemo {
+                            newVoiceMemo = false
+                        } else {
+                            newVoiceMemo = true
+                        }
                     } label: {
                         Image(systemName: "waveform")
                             .font(.system(size: 20).weight(.black))
@@ -61,6 +76,19 @@ struct ContentView: View {
                             .shadow(radius: 4, x: 0, y: 4)
                     }
                     .padding([.leading], 5)
+                }
+            }
+            .overlay {
+                if newNote {
+                    Text("Text editor")
+                }
+                
+                if migration {
+                    Text("Migration")
+                }
+                
+                if newVoiceMemo {
+                    Text("Recording")
                 }
             }
         }
