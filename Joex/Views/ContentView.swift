@@ -37,10 +37,12 @@ struct ContentView: View {
                             .font(.system(size: 20).weight(.semibold))
                             .padding(25)
                             .background(Color.gray)
+                            .opacity(migration || newVoiceMemo ? 0.5 : 1)
                             .foregroundColor(.white)
                             .clipShape(Circle())
                             .shadow(radius: 4, x: 0, y: 4)
                     }
+                    .disabled(migration || newVoiceMemo)
                     .padding([.trailing], 5)
                     
                     Button {
@@ -54,10 +56,12 @@ struct ContentView: View {
                             .font(.system(size: 20).weight(.black))
                             .padding(24)
                             .background(Color.green)
+                            .opacity(newNote || newVoiceMemo ? 0.5 : 1)
                             .foregroundColor(.white)
                             .clipShape(Circle())
                             .shadow(radius: 4, x: 0, y: 4)
                     }
+                    .disabled(newNote || newVoiceMemo)
                     .padding([.leading, .trailing], 5)
                     
                     Button {
@@ -71,13 +75,16 @@ struct ContentView: View {
                             .font(.system(size: 20).weight(.black))
                             .padding(24)
                             .background(Color.gray)
+                            .opacity(newNote || migration ? 0.5 : 1)
                             .foregroundColor(.white)
                             .clipShape(Circle())
                             .shadow(radius: 4, x: 0, y: 4)
                     }
+                    .disabled(newNote || migration)
                     .padding([.leading], 5)
                 }
             }
+            .navigationTitle("Log")
             .overlay {
                 if newNote {
                     Text("Text editor")
