@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-enum LogEntryType: String {
+enum LogEntryType: String, Codable {
     case Note = "note"
     case VoiceMemo = "voice_memo"
 }
