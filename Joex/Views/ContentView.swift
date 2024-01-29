@@ -9,15 +9,15 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Query private var notes: [Note]
+    @Query private var logEntries: [LogEntry]
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 ZStack(alignment: .bottom) {
                     List {
-                        ForEach(notes) { note in
-                            LogEntryView(note: note)
+                        ForEach(logEntries) { logEntry in
+                            LogEntryView(logEntry: logEntry)
                         }
                     }
                     

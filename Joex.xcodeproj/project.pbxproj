@@ -12,8 +12,7 @@
 		99D34C812B6686EE0095CE6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99D34C802B6686EE0095CE6C /* Assets.xcassets */; };
 		99D34C842B6686EE0095CE6C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99D34C832B6686EE0095CE6C /* Preview Assets.xcassets */; };
 		99D34C8C2B66C52B0095CE6C /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C8B2B66C52B0095CE6C /* LogEntry.swift */; };
-		99D34C902B66DADF0095CE6C /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C8F2B66DADF0095CE6C /* NoteView.swift */; };
-		99D34C922B66F9B80095CE6C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C912B66F9B80095CE6C /* Note.swift */; };
+		99D34C902B66DADF0095CE6C /* LogEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C8F2B66DADF0095CE6C /* LogEntryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,8 +22,7 @@
 		99D34C802B6686EE0095CE6C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		99D34C832B6686EE0095CE6C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		99D34C8B2B66C52B0095CE6C /* LogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
-		99D34C8F2B66DADF0095CE6C /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
-		99D34C912B66F9B80095CE6C /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		99D34C8F2B66DADF0095CE6C /* LogEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +76,6 @@
 			isa = PBXGroup;
 			children = (
 				99D34C8B2B66C52B0095CE6C /* LogEntry.swift */,
-				99D34C912B66F9B80095CE6C /* Note.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -87,7 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				99D34C7E2B6686ED0095CE6C /* ContentView.swift */,
-				99D34C8F2B66DADF0095CE6C /* NoteView.swift */,
+				99D34C8F2B66DADF0095CE6C /* LogEntryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -162,8 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99D34C922B66F9B80095CE6C /* Note.swift in Sources */,
-				99D34C902B66DADF0095CE6C /* NoteView.swift in Sources */,
+				99D34C902B66DADF0095CE6C /* LogEntryView.swift in Sources */,
 				99D34C7F2B6686ED0095CE6C /* ContentView.swift in Sources */,
 				99D34C7D2B6686ED0095CE6C /* JoexApp.swift in Sources */,
 				99D34C8C2B66C52B0095CE6C /* LogEntry.swift in Sources */,

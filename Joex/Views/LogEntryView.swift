@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct LogEntryView: View {
-    @Bindable var note: Note
+    @Bindable var logEntry: LogEntry
 
     var body: some View {
         VStack {
