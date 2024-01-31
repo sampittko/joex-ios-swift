@@ -9,10 +9,9 @@ import SwiftUI
 import SwiftData
 
 struct LogEntryView: View {
-    @Bindable var logEntry: LogEntry
+    public var logEntry: LogEntry
 
     var body: some View {
-        VStack {
-        }
+        Text(logEntry.note)
     }
 }

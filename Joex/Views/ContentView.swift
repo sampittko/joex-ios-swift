@@ -18,10 +18,11 @@ struct VerticalLabelStyle: LabelStyle {
 }
 
 struct ContentView: View {
+    @Environment(\.modelContext) private var modelContext
     @Query private var logEntries: [LogEntry]
     @State private var newNote: Bool = false
-    @State private var newVoiceMemo: Bool = false
     @State private var newLogEntry: Bool = false
+    @State private var note: String = "Enter your notes here"
     
     var body: some View {
         NavigationStack {
@@ -60,7 +61,7 @@ struct ContentView: View {
                 .padding([.bottom], -5)
                 .confirmationDialog("Change background", isPresented: $newLogEntry) {
                     Button("Note") { newNote = true }
-                    Button("Voice memo") { newVoiceMemo = true }
+                    Button("Cancel", role: .cancel) { newLogEntry = false }
                 } message: {
                     Text("Select type of new log entry")
                 }
@@ -74,10 +75,45 @@ struct ContentView: View {
                         Label("Migration", systemImage: "book.pages")
                             .labelStyle(VerticalLabelStyle())
                     })
-                    .disabled(logEntries.count == 0)
+                    .disabled(logEntries.isEmpty)
                     .accessibilityLabel("Migrate logs")
                 }
             }
+            .sheet(isPresented: $newNote, onDismiss: {
+                newLogEntry = false
+                newNote = false
+            }, content: {
+                NavigationView {
+                    VStack {
+                        TextEditor(text: $note)
+                            .padding()
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button(action: {
+                                newLogEntry = false
+                                newNote = false
+                                note = "Enter your notes here"
+                            }, label: {
+                                Text("Discard")
+                            })
+                            .accessibilityLabel("Discard note")
+                        }
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button(action: {
+                                let logEntryNote = LogEntry(note: note)
+                                modelContext.insert(logEntryNote)
+                                newLogEntry = false
+                                newNote = false
+                                note = "Enter your notes here"
+                            }, label: {
+                                Text("Save")
+                            })
+                            .accessibilityLabel("Save note")
+                        }
+                    }
+                }
+            })
         }
     }
 }
