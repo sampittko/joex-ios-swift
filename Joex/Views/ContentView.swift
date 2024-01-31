@@ -8,94 +8,74 @@
 import SwiftUI
 import SwiftData
 
+struct VerticalLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        VStack {
+            configuration.icon.font(.headline)
+            configuration.title.font(.footnote)
+        }
+    }
+}
+
 struct ContentView: View {
     @Query private var logEntries: [LogEntry]
     @State private var newNote: Bool = false
-    @State private var migration: Bool = false
     @State private var newVoiceMemo: Bool = false
+    @State private var newLogEntry: Bool = false
     
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                ScrollView {
-                    List {
-                        ForEach(logEntries) { logEntry in
-                            LogEntryView(logEntry: logEntry)
+                GeometryReader { geometry in
+                    ScrollView {
+                        if logEntries.isEmpty {
+                            VStack {
+                                Text("No logs to migrate 🎉")
+                                    .frame(maxWidth: 400)
+                            }
+                            .padding([.top], -50)
+                            .frame(width: geometry.size.width)
+                            .frame(minHeight: geometry.size.height)
+                        } else {
+                            List {
+                                ForEach(logEntries) { logEntry in
+                                    LogEntryView(logEntry: logEntry)
+                                }
+                            }
                         }
                     }
                 }
                 
-                HStack {
-                    Button {
-                        if newNote {
-                            newNote = false
-                        } else {
-                            newNote = true
-                        }
-                    } label: {
-                        Image(systemName: "note.text")
-                            .font(.system(size: 20).weight(.semibold))
-                            .padding(25)
-                            .background(Color.gray)
-                            .opacity(migration || newVoiceMemo ? 0.5 : 1)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .shadow(radius: 4, x: 0, y: 4)
-                    }
-                    .disabled(migration || newVoiceMemo)
-                    .padding([.trailing], 5)
-                    
-                    Button {
-                        if migration {
-                            migration = false
-                        } else {
-                            migration = true
-                        }
-                    } label: {
-                        Image(systemName: "book.pages")
-                            .font(.system(size: 20).weight(.black))
-                            .padding(24)
-                            .background(Color.green)
-                            .opacity(newNote || newVoiceMemo ? 0.5 : 1)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .shadow(radius: 4, x: 0, y: 4)
-                    }
-                    .disabled(newNote || newVoiceMemo)
-                    .padding([.leading, .trailing], 5)
-                    
-                    Button {
-                        if newVoiceMemo {
-                            newVoiceMemo = false
-                        } else {
-                            newVoiceMemo = true
-                        }
-                    } label: {
-                        Image(systemName: "waveform")
-                            .font(.system(size: 20).weight(.black))
-                            .padding(24)
-                            .background(Color.gray)
-                            .opacity(newNote || migration ? 0.5 : 1)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .shadow(radius: 4, x: 0, y: 4)
-                    }
-                    .disabled(newNote || migration)
-                    .padding([.leading], 5)
+                Button {
+                    newLogEntry = true
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: 25).weight(.semibold))
+                        .padding(24)
+                        .background(Color.indigo)
+                        .foregroundColor(.white)
+                        .clipShape(Circle())
+                        .shadow(radius: 4, x: 0, y: 4)
+                }
+                .padding([.bottom], -5)
+                .confirmationDialog("Change background", isPresented: $newLogEntry) {
+                    Button("Note") { newNote = true }
+                    Button("Voice memo") { newVoiceMemo = true }
+                } message: {
+                    Text("Select type of new log entry")
                 }
             }
-            .navigationTitle("Log")
-            .overlay {
-                if newNote {
-                    Text("Text editor")
-                }
-                
-                if migration {
-                    Text("Migration")
-                }
-                
-                if newVoiceMemo {
-                    Text("Recording")
+            .navigationTitle("Logs")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        
+                    }, label: {
+                        Label("Migration", systemImage: "book.pages")
+                            .labelStyle(VerticalLabelStyle())
+                    })
+                    .disabled(logEntries.count == 0)
+                    .accessibilityLabel("Migrate logs")
                 }
             }
         }
