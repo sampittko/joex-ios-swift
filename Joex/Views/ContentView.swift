@@ -19,7 +19,7 @@ struct VerticalLabelStyle: LabelStyle {
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var logEntries: [LogEntry]
+    @Query(sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
     @State private var newNote: Bool = false
     @State private var newLogEntry: Bool = false
     @State private var note: String = "Enter your notes here"
@@ -27,11 +27,9 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                ScrollView {
-                    List {
-                        ForEach(logEntries) {logEntry in
-                            LogEntryView(logEntry: logEntry)
-                        }
+                List {
+                    ForEach(logEntries) {logEntry in
+                        LogEntryView(logEntry: logEntry)
                     }
                 }
                 
