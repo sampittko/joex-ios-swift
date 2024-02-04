@@ -22,7 +22,7 @@ struct ContentView: View {
     @Query(sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
     @State private var newNote: Bool = false
     @State private var newLogEntry: Bool = false
-    @State private var note: String = "Enter your notes here"
+    @State private var note: String = ""
     
     var body: some View {
         NavigationStack {
@@ -79,7 +79,7 @@ struct ContentView: View {
                             Button(action: {
                                 newLogEntry = false
                                 newNote = false
-                                note = "Enter your notes here"
+                                note = ""
                             }, label: {
                                 Text("Discard")
                             })
@@ -91,10 +91,11 @@ struct ContentView: View {
                                 modelContext.insert(logEntryNote)
                                 newLogEntry = false
                                 newNote = false
-                                note = "Enter your notes here"
+                                note = ""
                             }, label: {
                                 Text("Save")
                             })
+                            .disabled(note.isEmpty)
                             .buttonStyle(.borderedProminent)
                             .buttonBorderShape(.capsule)
                             .accessibilityLabel("Save note")
