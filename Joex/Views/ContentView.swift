@@ -28,8 +28,13 @@ struct ContentView: View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 List {
-                    ForEach(logEntries) {logEntry in
+                    ForEach(logEntries) { logEntry in
                         LogEntryView(logEntry: logEntry)
+                            .swipeActions(allowsFullSwipe: false) {
+                                Button("Delete", systemImage: "trash", role: .destructive) {
+                                    modelContext.delete(logEntry)
+                                }
+                            }
                     }
                 }
                 

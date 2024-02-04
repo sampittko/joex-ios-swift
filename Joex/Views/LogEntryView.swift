@@ -10,8 +10,50 @@ import SwiftData
 
 struct LogEntryView: View {
     @Bindable public var logEntry: LogEntry
+    @Environment(\.colorScheme) var colorScheme
+    @State private var editing: Bool = false
+    @State private var updatedNote = ""
 
     var body: some View {
-        Text(logEntry.note)
+        Button {
+            editing = true
+            updatedNote = logEntry.note
+        } label: {
+            Text(logEntry.note)
+        }
+        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+        .sheet(isPresented: $editing, onDismiss: {
+            editing = false
+        }, content: {
+            NavigationView {
+                VStack {
+                    TextEditor(text: $updatedNote)
+                        .padding()
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(action: {
+                            editing = false
+                            updatedNote = logEntry.note
+                        }, label: {
+                            Text("Discard")
+                        })
+                        .accessibilityLabel("Discard changes to the note")
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            logEntry.note = updatedNote
+                            editing = false
+                        }, label: {
+                            Text("Update")
+                        })
+                        .disabled(updatedNote.isEmpty || updatedNote == logEntry.note)
+                        .buttonStyle(.borderedProminent)
+                        .buttonBorderShape(.capsule)
+                        .accessibilityLabel("Update note")
+                    }
+                }
+            }
+        })
     }
 }
