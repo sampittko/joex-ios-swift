@@ -36,9 +36,9 @@ struct LogEntryView: View {
                             editing = false
                             updatedNote = logEntry.note
                         }, label: {
-                            Text("Discard")
+                            Text("Close")
                         })
-                        .accessibilityLabel("Discard changes to the note")
+                        .accessibilityLabel("Close note")
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
