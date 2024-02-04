@@ -27,22 +27,10 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                GeometryReader { geometry in
-                    ScrollView {
-                        if logEntries.isEmpty {
-                            VStack {
-                                Text("No logs to migrate 🎉")
-                                    .frame(maxWidth: 400)
-                            }
-                            .padding([.top], -50)
-                            .frame(width: geometry.size.width)
-                            .frame(minHeight: geometry.size.height)
-                        } else {
-                            List {
-                                ForEach(logEntries) { logEntry in
-                                    LogEntryView(logEntry: logEntry)
-                                }
-                            }
+                ScrollView {
+                    List {
+                        ForEach(logEntries) {logEntry in
+                            LogEntryView(logEntry: logEntry)
                         }
                     }
                 }
@@ -109,6 +97,8 @@ struct ContentView: View {
                             }, label: {
                                 Text("Save")
                             })
+                            .buttonStyle(.borderedProminent)
+                            .buttonBorderShape(.capsule)
                             .accessibilityLabel("Save note")
                         }
                     }
