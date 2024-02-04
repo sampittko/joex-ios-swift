@@ -13,6 +13,8 @@
 		99D34C842B6686EE0095CE6C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99D34C832B6686EE0095CE6C /* Preview Assets.xcassets */; };
 		99D34C8C2B66C52B0095CE6C /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C8B2B66C52B0095CE6C /* LogEntry.swift */; };
 		99D34C902B66DADF0095CE6C /* LogEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C8F2B66DADF0095CE6C /* LogEntryView.swift */; };
+		99F04AD82B70025500F344B7 /* AddLogEntryNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F04AD72B70025500F344B7 /* AddLogEntryNoteIntent.swift */; };
+		99F04ADA2B70033600F344B7 /* JoexShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F04AD92B70033600F344B7 /* JoexShortcuts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,8 @@
 		99D34C832B6686EE0095CE6C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		99D34C8B2B66C52B0095CE6C /* LogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
 		99D34C8F2B66DADF0095CE6C /* LogEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntryView.swift; sourceTree = "<group>"; };
+		99F04AD72B70025500F344B7 /* AddLogEntryNoteIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLogEntryNoteIntent.swift; sourceTree = "<group>"; };
+		99F04AD92B70033600F344B7 /* JoexShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoexShortcuts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,7 @@
 		99D34C7B2B6686ED0095CE6C /* Joex */ = {
 			isa = PBXGroup;
 			children = (
+				99F04AD62B70020000F344B7 /* Intents */,
 				99D34C8D2B66D1520095CE6C /* Views */,
 				99D34C8A2B66C5180095CE6C /* Models */,
 				99D34C7C2B6686ED0095CE6C /* JoexApp.swift */,
@@ -87,6 +92,15 @@
 				99D34C8F2B66DADF0095CE6C /* LogEntryView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		99F04AD62B70020000F344B7 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				99F04AD72B70025500F344B7 /* AddLogEntryNoteIntent.swift */,
+				99F04AD92B70033600F344B7 /* JoexShortcuts.swift */,
+			);
+			path = Intents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +175,8 @@
 			files = (
 				99D34C902B66DADF0095CE6C /* LogEntryView.swift in Sources */,
 				99D34C7F2B6686ED0095CE6C /* ContentView.swift in Sources */,
+				99F04AD82B70025500F344B7 /* AddLogEntryNoteIntent.swift in Sources */,
+				99F04ADA2B70033600F344B7 /* JoexShortcuts.swift in Sources */,
 				99D34C7D2B6686ED0095CE6C /* JoexApp.swift in Sources */,
 				99D34C8C2B66C52B0095CE6C /* LogEntry.swift in Sources */,
 			);
