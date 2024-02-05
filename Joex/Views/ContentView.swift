@@ -19,6 +19,7 @@ struct VerticalLabelStyle: LabelStyle {
 }
 
 struct ContentView: View {
+    @Environment(\.scenePhase) var scenePhase
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
     @State private var newNote: Bool = false
@@ -133,10 +134,16 @@ struct ContentView: View {
                     })
                 }
             }
-            else {
-                Text("Locked")
+        }
+        .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
+            if newPhase == .inactive {
+                isUnlocked = false
+            } else if newPhase == .background {
+                isUnlocked = false
+            } else if newPhase == .active && isUnlocked == false {
+                authenticate()
             }
-        }.onAppear(perform: authenticate)
+        }
     }
 }
 
