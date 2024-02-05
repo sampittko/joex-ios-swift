@@ -21,11 +21,13 @@ struct VerticalLabelStyle: LabelStyle {
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
+    @Query(filter: #Predicate<LogEntry> { logEntry in
+        logEntry.migrated == false
+    }, sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
     @State private var newNote: Bool = false
     @State private var newLogEntry: Bool = false
     @State private var note: String = ""
-    @State private var isUnlocked = false
+    @State private var isUnlocked = true
     
     func authenticate() {
         let context = LAContext()
@@ -84,14 +86,11 @@ struct ContentView: View {
                     .navigationTitle("Logs")
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
-                            Button(action: {
-                                
-                            }, label: {
-                                Label("Migration", systemImage: "book.pages")
-                                    .labelStyle(VerticalLabelStyle())
-                            })
-                            .disabled(logEntries.isEmpty)
-                            .accessibilityLabel("Migrate logs")
+                            NavigationLink(destination: MigrationView(logEntries: logEntries)) {
+                                Image(systemName: "book.pages")
+                                    .accessibilityLabel("Migrate logs")
+                                    .disabled(logEntries.isEmpty)
+                            }
                         }
                     }
                     .sheet(isPresented: $newNote, onDismiss: {

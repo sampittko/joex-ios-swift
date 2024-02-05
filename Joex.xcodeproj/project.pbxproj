@@ -15,6 +15,7 @@
 		99D34C902B66DADF0095CE6C /* LogEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C8F2B66DADF0095CE6C /* LogEntryView.swift */; };
 		99F04AD82B70025500F344B7 /* AddLogEntryNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F04AD72B70025500F344B7 /* AddLogEntryNoteIntent.swift */; };
 		99F04ADA2B70033600F344B7 /* JoexShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F04AD92B70033600F344B7 /* JoexShortcuts.swift */; };
+		99FF20FD2B71945200C6AC15 /* MigrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF20FC2B71945200C6AC15 /* MigrationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		99D34C8F2B66DADF0095CE6C /* LogEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntryView.swift; sourceTree = "<group>"; };
 		99F04AD72B70025500F344B7 /* AddLogEntryNoteIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLogEntryNoteIntent.swift; sourceTree = "<group>"; };
 		99F04AD92B70033600F344B7 /* JoexShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoexShortcuts.swift; sourceTree = "<group>"; };
+		99FF20FC2B71945200C6AC15 /* MigrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			children = (
 				99D34C7E2B6686ED0095CE6C /* ContentView.swift */,
 				99D34C8F2B66DADF0095CE6C /* LogEntryView.swift */,
+				99FF20FC2B71945200C6AC15 /* MigrationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99D34C902B66DADF0095CE6C /* LogEntryView.swift in Sources */,
+				99FF20FD2B71945200C6AC15 /* MigrationView.swift in Sources */,
 				99D34C7F2B6686ED0095CE6C /* ContentView.swift in Sources */,
 				99F04AD82B70025500F344B7 /* AddLogEntryNoteIntent.swift in Sources */,
 				99F04ADA2B70033600F344B7 /* JoexShortcuts.swift in Sources */,
