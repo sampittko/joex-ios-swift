@@ -20,6 +20,7 @@ struct LogEntryView: View {
             updatedNote = logEntry.note
         } label: {
             Text(logEntry.note)
+                .lineLimit(1)
         }
         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
         .sheet(isPresented: $editing, onDismiss: {
