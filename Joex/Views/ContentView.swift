@@ -24,10 +24,14 @@ struct ContentView: View {
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.migrated == false
     }, sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
+    @Query(filter: #Predicate<LogEntry> { logEntry in
+        logEntry.migrated == true
+    }, sort: \LogEntry.created, order: .reverse) private var migratedLogEntries: [LogEntry]
     @State private var newNote: Bool = false
     @State private var newLogEntry: Bool = false
     @State private var note: String = ""
     @State private var isUnlocked = false
+    @State private var expandedMigratedLogEntries: Bool = false
     
     func authenticate() {
         let context = LAContext()
@@ -54,15 +58,29 @@ struct ContentView: View {
                 NavigationStack {
                     ZStack(alignment: .bottom) {
                         List {
-                            ForEach(logEntries) { logEntry in
-                                LogEntryView(logEntry: logEntry)
-                                    .swipeActions(allowsFullSwipe: false) {
-                                        Button("Delete", systemImage: "trash", role: .destructive) {
-                                            modelContext.delete(logEntry)
+                            Section (content: {
+                                ForEach(logEntries) { logEntry in
+                                    LogEntryView(logEntry: logEntry)
+                                        .swipeActions(allowsFullSwipe: false) {
+                                            Button("Delete", systemImage: "trash", role: .destructive) {
+                                                modelContext.delete(logEntry)
+                                            }
                                         }
+                                }
+                            })
+                            
+                            if migratedLogEntries.count > 0 {
+                                Section (isExpanded: $expandedMigratedLogEntries, content: {
+                                    ForEach(migratedLogEntries) { migratedLogEntry in
+                                        Text(migratedLogEntry.note)
+                                            .lineLimit(1)
                                     }
+                                }, header: {
+                                    Text("Migrated logs")
+                                })
                             }
                         }
+                        .listStyle(.sidebar)
                         
                         Button {
                             newLogEntry = true
