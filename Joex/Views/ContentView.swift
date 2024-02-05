@@ -88,9 +88,9 @@ struct ContentView: View {
                         ToolbarItem(placement: .topBarTrailing) {
                             NavigationLink(destination: MigrationView(logEntries: logEntries)) {
                                 Image(systemName: "book.pages")
-                                    .accessibilityLabel("Migrate logs")
-                                    .disabled(logEntries.isEmpty)
                             }
+                            .accessibilityLabel("Migrate logs")
+                            .disabled(logEntries.isEmpty)
                         }
                     }
                     .sheet(isPresented: $newNote, onDismiss: {
