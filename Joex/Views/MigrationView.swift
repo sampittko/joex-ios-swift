@@ -16,7 +16,7 @@ struct MigrationView: View {
                     Text("🎉").font(.largeTitle)
                 } else {
                     HStack {
-                        Text(logEntries.first?.note ?? "Empty note")
+                        Text(logEntries.last?.note ?? "Empty note")
                             .padding()
                         Spacer()
                     }
