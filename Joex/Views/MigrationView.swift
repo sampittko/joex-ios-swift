@@ -11,16 +11,32 @@ struct MigrationView: View {
     public var logEntries: [LogEntry]
     
     var body: some View {
-        if logEntries.isEmpty {
-            Text("Everything migrated 🎉").font(.title)
-        } else {
             VStack {
-                Text(logEntries.first?.note ?? "")
-                Spacer()
-                Button("Migrate log entry \(logEntries.first?.id ?? "")") {
-                    logEntries.first?.migrated = true
+                if logEntries.isEmpty {
+                    Text("🎉").font(.largeTitle)
+                } else {
+                    HStack {
+                        Text(logEntries.first?.note ?? "Empty note")
+                            .padding()
+                        Spacer()
+                    }
+                    
+                    Spacer()
+                    
+                    Button {
+                        logEntries.first?.migrated = true
+                    } label: {
+                        Image(systemName: "arrow.forward")
+                            .font(.system(size: 25).weight(.semibold))
+                            .padding(24)
+                            .background(Color.indigo)
+                            .foregroundColor(.white)
+                            .clipShape(Circle())
+                            .shadow(radius: 4, x: 0, y: 4)
+                    }
+                    .padding([.bottom], -5)
                 }
             }
-        }
+        .navigationTitle("Migration")
     }
 }
