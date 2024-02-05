@@ -27,7 +27,7 @@ struct ContentView: View {
     @State private var newNote: Bool = false
     @State private var newLogEntry: Bool = false
     @State private var note: String = ""
-    @State private var isUnlocked = true
+    @State private var isUnlocked = false
     
     func authenticate() {
         let context = LAContext()
