@@ -20,18 +20,10 @@ struct VerticalLabelStyle: LabelStyle {
 
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
-    @Environment(\.modelContext) private var modelContext
-    @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.migrated == false
-    }, sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
-    @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.migrated == true
-    }, sort: \LogEntry.created, order: .reverse) private var migratedLogEntries: [LogEntry]
     @State private var newNote: Bool = false
     @State private var newLogEntry: Bool = false
     @State private var note: String = ""
     @State private var isUnlocked = false
-    @State private var expandedMigratedLogEntries: Bool = false
     
     func authenticate() {
         let context = LAContext()
@@ -57,106 +49,18 @@ struct ContentView: View {
             if isUnlocked {
                 NavigationStack {
                     ZStack(alignment: .bottom) {
-                        List {
-                            if logEntries.isEmpty {
-                                HStack {
-                                    Spacer()
-                                    Text("List is empty 🥳")
-                                        .foregroundColor(.secondary)
-                                    Spacer()
-                                }
-                            } else {
-                                Section(content: {
-                                    ForEach(logEntries) { logEntry in
-                                        LogEntryView(logEntry: logEntry)
-                                            .swipeActions(allowsFullSwipe: false) {
-                                                Button("Delete", systemImage: "trash", role: .destructive) {
-                                                    modelContext.delete(logEntry)
-                                                }
-                                            }
-                                    }
-                                })
-                            }
-                            
-                            if migratedLogEntries.count > 0 {
-                                Section (isExpanded: $expandedMigratedLogEntries, content: {
-                                    ForEach(migratedLogEntries) { migratedLogEntry in
-                                        Text(migratedLogEntry.note)
-                                            .lineLimit(1)
-                                    }
-                                }, header: {
-                                    Text("Migrated logs")
-                                })
-                            }
-                        }
-                        .listStyle(.sidebar)
-                        
-                        Button {
-                            newLogEntry = true
-                        } label: {
-                            Image(systemName: "plus")
-                                .font(.system(size: 25).weight(.semibold))
-                                .padding(24)
-                                .background(Color.indigo)
-                                .foregroundColor(.white)
-                                .clipShape(Circle())
-                                .shadow(radius: 4, x: 0, y: 4)
-                        }
-                        .padding([.bottom], -5)
-                        .confirmationDialog("Change background", isPresented: $newLogEntry) {
-                            Button("Note") { newNote = true }
-                            Button("Cancel", role: .cancel) { newLogEntry = false }
-                        } message: {
-                            Text("Select type of new log entry")
-                        }
+                        LogsListView()
+                        NewLogEntryButtonView(newLogEntry: $newLogEntry, newNote: $newNote)
                     }
                     .navigationTitle("Logs")
                     .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            NavigationLink(destination: MigrationView(logEntries: logEntries)) {
-                                Image(systemName: "book.pages")
-                            }
-                            .accessibilityLabel("Migrate logs")
-                            .disabled(logEntries.isEmpty)
-                        }
+                        LogsToolbarView()
                     }
                     .sheet(isPresented: $newNote, onDismiss: {
                         newLogEntry = false
                         newNote = false
                     }, content: {
-                        NavigationView {
-                            VStack {
-                                TextEditor(text: $note)
-                                    .padding()
-                            }
-                            .toolbar {
-                                ToolbarItem(placement: .topBarLeading) {
-                                    Button(action: {
-                                        newLogEntry = false
-                                        newNote = false
-                                        note = ""
-                                    }, label: {
-                                        Text("Discard")
-                                    })
-                                    .accessibilityLabel("Discard note")
-                                }
-                                ToolbarItem(placement: .topBarTrailing) {
-                                    Button(action: {
-                                        let logEntryNote = LogEntry(note: note)
-                                        modelContext.insert(logEntryNote)
-                                        newLogEntry = false
-                                        newNote = false
-                                        note = ""
-                                    }, label: {
-                                        Text("Save")
-                                    })
-                                    .disabled(note.isEmpty)
-                                    .buttonStyle(.borderedProminent)
-                                    .buttonBorderShape(.capsule)
-                                    .accessibilityLabel("Save note")
-                                }
-                            }
-                        }
+                        NewLogEntryNoteView(note: $note, newLogEntry: $newLogEntry, newNote: $newNote)
                     })
                 }
             }
