@@ -58,16 +58,25 @@ struct ContentView: View {
                 NavigationStack {
                     ZStack(alignment: .bottom) {
                         List {
-                            Section (content: {
-                                ForEach(logEntries) { logEntry in
-                                    LogEntryView(logEntry: logEntry)
-                                        .swipeActions(allowsFullSwipe: false) {
-                                            Button("Delete", systemImage: "trash", role: .destructive) {
-                                                modelContext.delete(logEntry)
-                                            }
-                                        }
+                            if logEntries.isEmpty {
+                                HStack {
+                                    Spacer()
+                                    Text("List is empty 🥳")
+                                        .foregroundColor(.secondary)
+                                    Spacer()
                                 }
-                            })
+                            } else {
+                                Section(content: {
+                                    ForEach(logEntries) { logEntry in
+                                        LogEntryView(logEntry: logEntry)
+                                            .swipeActions(allowsFullSwipe: false) {
+                                                Button("Delete", systemImage: "trash", role: .destructive) {
+                                                    modelContext.delete(logEntry)
+                                                }
+                                            }
+                                    }
+                                })
+                            }
                             
                             if migratedLogEntries.count > 0 {
                                 Section (isExpanded: $expandedMigratedLogEntries, content: {
