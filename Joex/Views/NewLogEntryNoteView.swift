@@ -7,11 +7,33 @@
 
 import SwiftUI
 
+var INITIAL_NOTE: String = ""
+
 struct NewLogEntryNoteView: View {
     @Environment(\.modelContext) private var modelContext
-    @Binding public var note: String;
-    @Binding public var newLogEntry: Bool;
-    @Binding public var newNote: Bool;
+    @State private var note: String = INITIAL_NOTE;
+    public var onDiscard: () -> Void
+    public var onSave: () -> Void
+    
+    func createNoteLogEntry() {
+        let logEntryNote = LogEntry(note: note)
+        modelContext.insert(logEntryNote)
+    }
+    
+    func handleSave() {
+        createNoteLogEntry()
+        resetNote()
+        onSave()
+    }
+    
+    func handleDiscard() {
+        resetNote()
+        onDiscard()
+    }
+    
+    func resetNote() {
+        note = INITIAL_NOTE
+    }
     
     var body: some View {
         NavigationView {
@@ -22,9 +44,7 @@ struct NewLogEntryNoteView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
-                        newLogEntry = false
-                        newNote = false
-                        note = ""
+                        handleDiscard()
                     }, label: {
                         Text("Discard")
                     })
@@ -32,11 +52,7 @@ struct NewLogEntryNoteView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        let logEntryNote = LogEntry(note: note)
-                        modelContext.insert(logEntryNote)
-                        newLogEntry = false
-                        newNote = false
-                        note = ""
+                        handleSave()
                     }, label: {
                         Text("Save")
                     })

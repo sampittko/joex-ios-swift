@@ -9,23 +9,13 @@ import LocalAuthentication
 import SwiftUI
 import SwiftData
 
-struct VerticalLabelStyle: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        VStack {
-            configuration.icon.font(.headline)
-            configuration.title.font(.footnote)
-        }
-    }
-}
-
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var newNote: Bool = false
     @State private var newLogEntry: Bool = false
-    @State private var note: String = ""
-    @State private var isUnlocked = false
+    @State private var authenticated = false
     
-    func authenticate() {
+    func requestAuthentication() {
         let context = LAContext()
         var error: NSError?
         
@@ -34,7 +24,7 @@ struct ContentView: View {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                 // authentication has now completed
                 if success {
-                    isUnlocked = true
+                    authenticated = true
                 } else {
                     // there was a problem
                 }
@@ -44,9 +34,14 @@ struct ContentView: View {
         }
     }
     
+    func resetNewLogEntryNote() {
+        newLogEntry = false
+        newNote = false
+    }
+    
     var body: some View {
         VStack {
-            if isUnlocked {
+            if authenticated {
                 NavigationStack {
                     ZStack(alignment: .bottom) {
                         LogsListView()
@@ -57,21 +52,23 @@ struct ContentView: View {
                         LogsToolbarView()
                     }
                     .sheet(isPresented: $newNote, onDismiss: {
-                        newLogEntry = false
-                        newNote = false
+                        resetNewLogEntryNote()
                     }, content: {
-                        NewLogEntryNoteView(note: $note, newLogEntry: $newLogEntry, newNote: $newNote)
+                        NewLogEntryNoteView(
+                            onDiscard: resetNewLogEntryNote,
+                            onSave: resetNewLogEntryNote
+                        )
                     })
                 }
             }
         }
         .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
             if newPhase == .inactive {
-                isUnlocked = false
+                authenticated = false
             } else if newPhase == .background {
-                isUnlocked = false
-            } else if newPhase == .active && isUnlocked == false {
-                authenticate()
+                authenticated = false
+            } else if newPhase == .active && authenticated == false {
+                requestAuthentication()
             }
         }
     }
