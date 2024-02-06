@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NewLogEntryButtonView: View {
     @Binding public var newLogEntry: Bool
-    @Binding public var newNote: Bool
+    @Binding public var newLogEntryNote: Bool
     
     func handleClick() {
         newLogEntry = true
@@ -19,7 +19,7 @@ struct NewLogEntryButtonView: View {
         FabButtonView(handleClick: self.handleClick, icon: "plus")
             .padding([.bottom], -5)
             .confirmationDialog("Change background", isPresented: $newLogEntry) {
-                Button("Note") { newNote = true }
+                Button("Note") { newLogEntryNote = true }
                 Button("Cancel", role: .cancel) { newLogEntry = false }
             } message: {
                 Text("Select type of new log entry")

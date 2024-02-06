@@ -11,7 +11,7 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
-    @State private var newNote: Bool = false
+    @State private var newLogEntryNote: Bool = false
     @State private var newLogEntry: Bool = false
     @State private var authenticated = false
     
@@ -36,7 +36,7 @@ struct ContentView: View {
     
     func resetNewLogEntryNote() {
         newLogEntry = false
-        newNote = false
+        newLogEntryNote = false
     }
     
     var body: some View {
@@ -45,13 +45,13 @@ struct ContentView: View {
                 NavigationStack {
                     ZStack(alignment: .bottom) {
                         LogsListView()
-                        NewLogEntryButtonView(newLogEntry: $newLogEntry, newNote: $newNote)
+                        NewLogEntryButtonView(newLogEntry: $newLogEntry, newLogEntryNote: $newLogEntryNote)
                     }
                     .navigationTitle("Logs")
                     .toolbar {
                         LogsToolbarView()
                     }
-                    .sheet(isPresented: $newNote, onDismiss: {
+                    .sheet(isPresented: $newLogEntryNote, onDismiss: {
                         resetNewLogEntryNote()
                     }, content: {
                         NewLogEntryNoteView(
