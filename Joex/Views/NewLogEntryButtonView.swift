@@ -11,24 +11,18 @@ struct NewLogEntryButtonView: View {
     @Binding public var newLogEntry: Bool
     @Binding public var newNote: Bool
     
+    func handleClick() {
+        newLogEntry = true
+    }
+    
     var body: some View {
-        Button {
-            newLogEntry = true
-        } label: {
-            Image(systemName: "plus")
-                .font(.system(size: 25).weight(.semibold))
-                .padding(24)
-                .background(Color.indigo)
-                .foregroundColor(.white)
-                .clipShape(Circle())
-                .shadow(radius: 4, x: 0, y: 4)
-        }
-        .padding([.bottom], -5)
-        .confirmationDialog("Change background", isPresented: $newLogEntry) {
-            Button("Note") { newNote = true }
-            Button("Cancel", role: .cancel) { newLogEntry = false }
-        } message: {
-            Text("Select type of new log entry")
-        }
+        FabButtonView(handleClick: self.handleClick, icon: "plus")
+            .padding([.bottom], -5)
+            .confirmationDialog("Change background", isPresented: $newLogEntry) {
+                Button("Note") { newNote = true }
+                Button("Cancel", role: .cancel) { newLogEntry = false }
+            } message: {
+                Text("Select type of new log entry")
+            }
     }
 }

@@ -23,8 +23,10 @@ struct LogsListView: View {
             if logEntries.isEmpty {
                 HStack {
                     Spacer()
+                    
                     Text("List is empty 🥳")
                         .foregroundColor(.secondary)
+                    
                     Spacer()
                 }
             } else {

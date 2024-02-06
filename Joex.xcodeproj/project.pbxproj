@@ -11,6 +11,7 @@
 		99741DF32B727045008AD9FF /* NewLogEntryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99741DF22B727045008AD9FF /* NewLogEntryButtonView.swift */; };
 		99741DF52B727132008AD9FF /* LogsToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99741DF42B727132008AD9FF /* LogsToolbarView.swift */; };
 		99741DF72B727238008AD9FF /* NewLogEntryNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99741DF62B727238008AD9FF /* NewLogEntryNoteView.swift */; };
+		99741DF92B7274D3008AD9FF /* FabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99741DF82B7274D3008AD9FF /* FabButtonView.swift */; };
 		99D34C7D2B6686ED0095CE6C /* JoexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C7C2B6686ED0095CE6C /* JoexApp.swift */; };
 		99D34C7F2B6686ED0095CE6C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C7E2B6686ED0095CE6C /* ContentView.swift */; };
 		99D34C812B6686EE0095CE6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99D34C802B6686EE0095CE6C /* Assets.xcassets */; };
@@ -27,6 +28,7 @@
 		99741DF22B727045008AD9FF /* NewLogEntryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLogEntryButtonView.swift; sourceTree = "<group>"; };
 		99741DF42B727132008AD9FF /* LogsToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsToolbarView.swift; sourceTree = "<group>"; };
 		99741DF62B727238008AD9FF /* NewLogEntryNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLogEntryNoteView.swift; sourceTree = "<group>"; };
+		99741DF82B7274D3008AD9FF /* FabButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FabButtonView.swift; sourceTree = "<group>"; };
 		99D34C792B6686ED0095CE6C /* Joex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Joex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D34C7C2B6686ED0095CE6C /* JoexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoexApp.swift; sourceTree = "<group>"; };
 		99D34C7E2B6686ED0095CE6C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				99741DF22B727045008AD9FF /* NewLogEntryButtonView.swift */,
 				99741DF42B727132008AD9FF /* LogsToolbarView.swift */,
 				99741DF62B727238008AD9FF /* NewLogEntryNoteView.swift */,
+				99741DF82B7274D3008AD9FF /* FabButtonView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 				99D34C7D2B6686ED0095CE6C /* JoexApp.swift in Sources */,
 				99D34C8C2B66C52B0095CE6C /* LogEntry.swift in Sources */,
 				99741DF72B727238008AD9FF /* NewLogEntryNoteView.swift in Sources */,
+				99741DF92B7274D3008AD9FF /* FabButtonView.swift in Sources */,
 				99741DF52B727132008AD9FF /* LogsToolbarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
