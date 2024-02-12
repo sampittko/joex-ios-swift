@@ -11,7 +11,7 @@ struct MigrationView: View {
     public var logEntries: [LogEntry]
     
     func handleClick() {
-        logEntries.first?.migrated = true
+        logEntries.last?.migrated = true
     }
     
     var body: some View {

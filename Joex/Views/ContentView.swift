@@ -13,7 +13,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var newLogEntryNote: Bool = false
     @State private var newLogEntry: Bool = false
-    @State private var authenticated = false
+    @State private var authenticated: Bool = false
     
     func requestAuthentication() {
         let context = LAContext()
