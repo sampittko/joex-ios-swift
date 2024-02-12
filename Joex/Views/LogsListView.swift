@@ -47,6 +47,15 @@ struct LogsListView: View {
                     ForEach(logEntriesMigrated) { logEntryMigrated in
                         Text(logEntryMigrated.note)
                             .lineLimit(1)
+                            .swipeActions(allowsFullSwipe: false) {
+                                Button("Delete", systemImage: "trash", role: .destructive) {
+                                    modelContext.delete(logEntryMigrated)
+                                }
+                                
+                                Button("Recover", systemImage: "arrow.circlepath") {
+                                    logEntryMigrated.migrated = false
+                                }
+                            }
                     }
                 }, header: {
                     Text("Migrated logs")
