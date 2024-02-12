@@ -46,6 +46,7 @@ struct LogsListView: View {
                 Section (isExpanded: $expandedMigratedLogEntries, content: {
                     ForEach(logEntriesMigrated) { logEntryMigrated in
                         Text(logEntryMigrated.note)
+                            .foregroundColor(.secondary)
                             .lineLimit(1)
                             .swipeActions(allowsFullSwipe: false) {
                                 Button("Delete", systemImage: "trash", role: .destructive) {
