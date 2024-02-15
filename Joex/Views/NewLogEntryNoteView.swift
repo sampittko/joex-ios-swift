@@ -42,6 +42,14 @@ struct NewLogEntryNoteView: View {
                 TextEditor(text: $note)
                     .padding()
                     .focused($keyboardFocused)
+                    .overlay {
+                        if note.isEmpty {
+                            Text("<- start typing")
+                                .padding()
+                                .position(x: 85, y: 33)
+                                .opacity(0.25)
+                        }
+                    }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

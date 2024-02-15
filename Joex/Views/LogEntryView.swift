@@ -43,6 +43,14 @@ struct SheetView: View {
                 TextEditor(text: $updatedNote)
                     .padding()
                     .focused($keyboardFocused)
+                    .overlay {
+                        if updatedNote.isEmpty {
+                            Text("<- start typing")
+                                .padding()
+                                .position(x: 85, y: 33)
+                                .opacity(0.25)
+                        }
+                    }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
