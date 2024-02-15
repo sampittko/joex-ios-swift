@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MigrationView: View {
+    @Environment(\.dismiss) var dismiss
     public var logEntries: [LogEntry]
     
     func handleClick() {
@@ -15,28 +16,29 @@ struct MigrationView: View {
     }
     
     var body: some View {
+        if logEntries.last != nil {
             VStack {
-                if logEntries.isEmpty {
-                    Text("🎉").font(.largeTitle)
-                } else {
-                    HStack {
-                        Text(logEntries.last?.note ?? "Empty note")
-                            .padding()
-                        
-                        Spacer()
-                    }
+                HStack {
+                    Text(logEntries.last?.note ?? "")
+                        .padding()
                     
                     Spacer()
+                }
+                
+                Spacer()
+                
+                HStack {
+                    Spacer()
                     
-                    HStack {
-                        Spacer()
-                        
-                        FabButtonView(handleClick: self.handleClick, icon: "checkmark", color: Color.green)
-                            .padding([.bottom], -5)
-                            .padding([.trailing], 20)
-                    }
+                    FabButtonView(handleClick: self.handleClick, icon: "checkmark", color: Color.green)
+                        .padding([.bottom], -5)
+                        .padding([.trailing], 20)
                 }
             }
-        .navigationTitle("Migration")
+            .navigationTitle("Migration")
+            .onDisappear {
+                dismiss()
+            }
+        }
     }
 }
