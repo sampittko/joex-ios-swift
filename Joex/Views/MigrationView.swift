@@ -31,7 +31,7 @@ struct MigrationView: View {
                     HStack {
                         Spacer()
                         
-                        FabButtonView(handleClick: self.handleClick, icon: "checkmark")
+                        FabButtonView(handleClick: self.handleClick, icon: "checkmark", color: Color.green)
                             .padding([.bottom], -5)
                             .padding([.trailing], 20)
                     }

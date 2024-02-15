@@ -10,6 +10,7 @@ import SwiftUI
 struct FabButtonView: View {
     public var handleClick: () -> Void
     public var icon: String
+    public var color: Color
     
     var body: some View {
         Button {
@@ -18,7 +19,7 @@ struct FabButtonView: View {
             Image(systemName: icon)
                 .font(.system(size: 25).weight(.semibold))
                 .padding(24)
-                .background(Color.indigo)
+                .background(color)
                 .foregroundColor(.white)
                 .clipShape(Circle())
                 .shadow(radius: 4, x: 0, y: 4)
