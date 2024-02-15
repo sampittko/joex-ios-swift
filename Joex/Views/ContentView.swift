@@ -13,7 +13,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var newLogEntryNote: Bool = false
     @State private var newLogEntry: Bool = false
-    @State private var authenticated: Bool = false
+    @State private var isAuthenticated: Bool = false
     
     func requestAuthentication() {
         let context = LAContext()
@@ -24,7 +24,7 @@ struct ContentView: View {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                 // authentication has now completed
                 if success {
-                    authenticated = true
+                    isAuthenticated = true
                 } else {
                     // there was a problem
                 }
@@ -41,7 +41,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            if authenticated {
+            if isAuthenticated {
                 NavigationStack {
                     ZStack(alignment: .bottom) {
                         LogsListView()
@@ -64,10 +64,10 @@ struct ContentView: View {
         }
         .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
             if newPhase == .inactive {
-                authenticated = false
+                isAuthenticated = false
             } else if newPhase == .background {
-                authenticated = false
-            } else if newPhase == .active && authenticated == false {
+                isAuthenticated = false
+            } else if newPhase == .active && isAuthenticated == false {
                 requestAuthentication()
             }
         }
