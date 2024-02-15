@@ -14,6 +14,7 @@ struct NewLogEntryNoteView: View {
     @State private var note: String = INITIAL_NOTE;
     public var onDiscard: () -> Void
     public var onSave: () -> Void
+    @FocusState private var keyboardFocused: Bool
     
     func createNoteLogEntry() {
         let logEntryNote = LogEntry(note: note)
@@ -40,6 +41,7 @@ struct NewLogEntryNoteView: View {
             VStack {
                 TextEditor(text: $note)
                     .padding()
+                    .focused($keyboardFocused)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -62,6 +64,9 @@ struct NewLogEntryNoteView: View {
                     .accessibilityLabel("Save note")
                 }
             }
+        }
+        .onAppear {
+            keyboardFocused = true
         }
     }
 }

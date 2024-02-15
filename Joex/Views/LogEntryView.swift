@@ -26,35 +26,50 @@ struct LogEntryView: View {
         .sheet(isPresented: $editing, onDismiss: {
             editing = false
         }, content: {
-            NavigationView {
-                VStack {
-                    TextEditor(text: $updatedNote)
-                        .padding()
+            SheetView(updatedNote: $updatedNote, editing: $editing, logEntry: logEntry)
+        })
+    }
+}
+
+struct SheetView: View {
+    @Binding public var updatedNote: String
+    @Binding public var editing: Bool
+    public var logEntry: LogEntry
+    @FocusState private var keyboardFocused: Bool
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                TextEditor(text: $updatedNote)
+                    .padding()
+                    .focused($keyboardFocused)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        editing = false
+                        updatedNote = logEntry.note
+                    }, label: {
+                        Text("Close")
+                    })
+                    .accessibilityLabel("Close note")
                 }
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button(action: {
-                            editing = false
-                            updatedNote = logEntry.note
-                        }, label: {
-                            Text("Close")
-                        })
-                        .accessibilityLabel("Close note")
-                    }
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(action: {
-                            logEntry.note = updatedNote
-                            editing = false
-                        }, label: {
-                            Text("Update")
-                        })
-                        .disabled(updatedNote.isEmpty || updatedNote == logEntry.note)
-                        .buttonStyle(.borderedProminent)
-                        .buttonBorderShape(.capsule)
-                        .accessibilityLabel("Update note")
-                    }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        logEntry.note = updatedNote
+                        editing = false
+                    }, label: {
+                        Text("Update")
+                    })
+                    .disabled(updatedNote.isEmpty || updatedNote == logEntry.note)
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.capsule)
+                    .accessibilityLabel("Update note")
                 }
             }
-        })
+        }
+        .onAppear {
+            keyboardFocused = true
+        }
     }
 }
