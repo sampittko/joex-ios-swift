@@ -18,7 +18,7 @@ struct NewLogEntryButtonView: View {
     var body: some View {
         FabButtonView(handleClick: self.handleClick, icon: "plus")
             .padding([.bottom], -5)
-            .confirmationDialog("Change background", isPresented: $newLogEntry) {
+            .confirmationDialog("New log entry type", isPresented: $newLogEntry) {
                 Button("Note") { newLogEntryNote = true }
                 Button("Cancel", role: .cancel) { newLogEntry = false }
             } message: {
