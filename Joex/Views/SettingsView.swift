@@ -8,6 +8,7 @@
 import SwiftUI
 
 enum DeleteMigratedLogAfter: String, CaseIterable {
+    case Never = "Never"
     case OneDay = "1 day"
     case ThreeDays = "3 days"
     case OneWeek = "1 week"
@@ -16,7 +17,7 @@ enum DeleteMigratedLogAfter: String, CaseIterable {
 
 struct SettingsView: View {
     @AppStorage("deleteMigratedLogAfter")
-    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
+    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.Never.rawValue
     
     var body: some View {
         Form {

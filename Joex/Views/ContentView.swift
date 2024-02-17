@@ -52,6 +52,8 @@ struct ContentView: View {
                     shouldDelete = logEntry.migratedDate!.distance(to: Date.now) / 86400 >= 7
                 case DeleteMigratedLogAfter.OneMonth.rawValue:
                     shouldDelete = logEntry.migratedDate!.distance(to: Date.now) / 86400 >= 31
+                case DeleteMigratedLogAfter.Never.rawValue:
+                    shouldDelete = false
                 default:
                     shouldDelete = false
             }
