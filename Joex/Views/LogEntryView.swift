@@ -65,6 +65,7 @@ struct SheetView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         logEntry.note = updatedNote
+                        logEntry.updatedDate = .now
                         editing = false
                     }, label: {
                         Text("Update")
