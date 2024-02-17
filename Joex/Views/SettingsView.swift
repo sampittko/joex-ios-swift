@@ -8,15 +8,15 @@
 import SwiftUI
 
 enum DeleteMigratedLogAfter: String, CaseIterable {
-    case midnight  = "Midnight"
-    case threeDays = "3 days"
-    case oneWeek  = "1 week"
-    case oneMonth  = "1 month"
+    case OneDay = "1 day"
+    case ThreeDays = "3 days"
+    case OneWeek = "1 week"
+    case OneMonth = "1 month"
 }
 
 struct SettingsView: View {
     @AppStorage("deleteMigratedLogAfter")
-    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.threeDays.rawValue
+    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
     
     var body: some View {
         Form {

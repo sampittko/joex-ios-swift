@@ -10,10 +10,11 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @Environment(\.modelContext) private var modelContext
     @AppStorage("deleteMigratedLogAfter")
-    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.threeDays.rawValue
+    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
     @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.isMigrated == false
+        logEntry.isMigrated == true
     }) private var logEntries: [LogEntry]
     @Environment(\.scenePhase) var scenePhase
     @State private var newLogEntryNote: Bool = false
@@ -39,9 +40,24 @@ struct ContentView: View {
         }
     }
     
-    func wipeOutdatedMigratedLogs() {
+    func updateMigratedLogsList() {
         for logEntry in logEntries {
-            // logika rozdielov datumov
+            var shouldDelete: Bool
+            switch deleteMigratedLogAfter {
+                case DeleteMigratedLogAfter.OneDay.rawValue:
+                    shouldDelete = logEntry.migratedDate!.distance(to: Date.now) / 86400 >= 1
+                case DeleteMigratedLogAfter.ThreeDays.rawValue:
+                    shouldDelete = logEntry.migratedDate!.distance(to: Date.now) / 86400 >= 3
+                case DeleteMigratedLogAfter.OneWeek.rawValue:
+                    shouldDelete = logEntry.migratedDate!.distance(to: Date.now) / 86400 >= 7
+                case DeleteMigratedLogAfter.OneMonth.rawValue:
+                    shouldDelete = logEntry.migratedDate!.distance(to: Date.now) / 86400 >= 31
+                default:
+                    shouldDelete = false
+            }
+            if shouldDelete == true {
+                modelContext.delete(logEntry)
+            }
         }
     }
     
@@ -74,14 +90,12 @@ struct ContentView: View {
             }
         }
         .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
-            if newPhase == .inactive {
-                isAuthenticated = false
-            } else if newPhase == .background {
+            if newPhase == .inactive || newPhase == .background {
                 isAuthenticated = false
             } else if newPhase == .active && isAuthenticated == false {
                 requestAuthentication()
             } else {
-                wipeOutdatedMigratedLogs()
+                updateMigratedLogsList()
             }
         }
     }
