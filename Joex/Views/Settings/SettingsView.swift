@@ -52,6 +52,7 @@ struct SettingsView: View {
                             Text(value.rawValue).tag(value.rawValue)
                         }
                     }
+                    .disabled(true)
                 }
             }
             Section("Migration") {
@@ -61,7 +62,7 @@ struct SettingsView: View {
                     }
                 }
                 Toggle("Daily reminder", isOn: $dailyMigrationReminder)
-//                    .disabled(true)
+                    .disabled(true)
                 if dailyMigrationReminder {
                     DatePicker("Reminder time", selection: $dailyMigrationReminderTimeState , displayedComponents: .hourAndMinute)
                         .onChange(of: dailyMigrationReminderTimeState) { _, newDate in
