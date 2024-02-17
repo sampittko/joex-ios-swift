@@ -44,6 +44,8 @@ struct ContentView: View {
         for logEntry in logEntries {
             var shouldDelete: Bool
             switch deleteMigratedLogAfter {
+                case DeleteMigratedLogAfter.Immediately.rawValue:
+                    shouldDelete = true
                 case DeleteMigratedLogAfter.OneDay.rawValue:
                     shouldDelete = logEntry.migratedDate!.distance(to: Date.now) / 86400 >= 1
                 case DeleteMigratedLogAfter.ThreeDays.rawValue:
