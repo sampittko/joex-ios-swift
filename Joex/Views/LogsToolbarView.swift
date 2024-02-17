@@ -11,7 +11,7 @@ import SwiftData
 struct LogsToolbarView: ToolbarContent {
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.migrated == false
-    }, sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
+    }) private var logEntries: [LogEntry]
     
     var body: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
@@ -22,7 +22,7 @@ struct LogsToolbarView: ToolbarContent {
         }
         
         ToolbarItem(placement: .topBarTrailing) {
-            NavigationLink(destination: MigrationView(logEntries: logEntries)) {
+            NavigationLink(destination: MigrationView()) {
                 Image(systemName: "book.pages")
             }
             .accessibilityLabel("Migration")

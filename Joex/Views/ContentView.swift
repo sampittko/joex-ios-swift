@@ -10,6 +10,11 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @AppStorage("deleteMigratedLogAfter")
+    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.threeDays.rawValue
+    @Query(filter: #Predicate<LogEntry> { logEntry in
+        logEntry.migrated == false
+    }) private var logEntries: [LogEntry]
     @Environment(\.scenePhase) var scenePhase
     @State private var newLogEntryNote: Bool = false
     @State private var newLogEntry: Bool = false
@@ -31,6 +36,12 @@ struct ContentView: View {
             }
         } else {
             // no biometrics
+        }
+    }
+    
+    func wipeOutdatedMigratedLogs() {
+        for logEntry in logEntries {
+            // logika rozdielov datumov
         }
     }
     
@@ -69,6 +80,8 @@ struct ContentView: View {
                 isAuthenticated = false
             } else if newPhase == .active && isAuthenticated == false {
                 requestAuthentication()
+            } else {
+                wipeOutdatedMigratedLogs()
             }
         }
     }

@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MigrationView: View {
+    @Query(filter: #Predicate<LogEntry> { logEntry in
+        logEntry.migrated == false
+    }, sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
     @Environment(\.dismiss) var dismiss
-    public var logEntries: [LogEntry]
     
     func handleClick() {
         logEntries.last?.migrated = true
