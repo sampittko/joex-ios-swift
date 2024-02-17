@@ -9,14 +9,21 @@ import SwiftUI
 import SwiftData
 
 struct MigrationView: View {
+    @Environment(\.modelContext) private var modelContext
+    @AppStorage("deleteMigratedLogAfter")
+    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == false
     }, sort: \LogEntry.createdDate, order: .reverse) private var logEntries: [LogEntry]
     @Environment(\.dismiss) var dismiss
     
     func handleClick() {
-        logEntries.last?.isMigrated = true
-        logEntries.last?.migratedDate = .now
+        if deleteMigratedLogAfter == DeleteMigratedLogAfter.Immediately.rawValue {
+            modelContext.delete(logEntries.last!)
+        } else {
+            logEntries.last!.isMigrated = true
+            logEntries.last!.migratedDate = .now
+        }
     }
     
     var body: some View {
