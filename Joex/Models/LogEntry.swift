@@ -12,13 +12,17 @@ import SwiftData
     @Attribute(.unique) public var id: String!
     public var createdDate: Date
     public var updatedDate: Date
+    public var migratedDate: Date?
+    public var recoveredDate: Date?
     public var isMigrated: Bool
     public var note: String
     
-    init(note: String, createdDate: Date = .now, updatedDate: Date = .now, isMigrated: Bool = false) {
+    init(note: String, createdDate: Date = .now, updatedDate: Date = .now, migratedDate: Date? = nil, recoveredDate: Date? = nil, isMigrated: Bool = false) {
         self.note = note
         self.createdDate = createdDate
         self.updatedDate = updatedDate
+        self.migratedDate = migratedDate
+        self.recoveredDate = recoveredDate
         self.isMigrated = isMigrated
     }
 }

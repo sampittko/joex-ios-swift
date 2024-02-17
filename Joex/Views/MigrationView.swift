@@ -16,6 +16,7 @@ struct MigrationView: View {
     
     func handleClick() {
         logEntries.last?.isMigrated = true
+        logEntries.last?.migratedDate = .now
     }
     
     var body: some View {

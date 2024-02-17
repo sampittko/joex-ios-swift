@@ -55,6 +55,8 @@ struct LogsListView: View {
                                 
                                 Button("Recover", systemImage: "arrow.circlepath") {
                                     logEntryMigrated.isMigrated = false
+                                    logEntryMigrated.migratedDate = nil
+                                    logEntryMigrated.recoveredDate = .now
                                 }
                             }
                     }
