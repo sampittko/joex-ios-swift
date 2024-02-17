@@ -17,6 +17,7 @@ struct LogsToolbarView: ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             NavigationLink(destination: SettingsView()) {
                 Image(systemName: "gear")
+                    .foregroundStyle(.gray)
             }
             .accessibilityLabel("Settings")
         }
