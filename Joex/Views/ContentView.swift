@@ -13,7 +13,7 @@ struct ContentView: View {
     @AppStorage("deleteMigratedLogAfter")
     private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.threeDays.rawValue
     @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.migrated == false
+        logEntry.isMigrated == false
     }) private var logEntries: [LogEntry]
     @Environment(\.scenePhase) var scenePhase
     @State private var newLogEntryNote: Bool = false

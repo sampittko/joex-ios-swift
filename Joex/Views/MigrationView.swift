@@ -10,12 +10,12 @@ import SwiftData
 
 struct MigrationView: View {
     @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.migrated == false
-    }, sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
+        logEntry.isMigrated == false
+    }, sort: \LogEntry.createdDate, order: .reverse) private var logEntries: [LogEntry]
     @Environment(\.dismiss) var dismiss
     
     func handleClick() {
-        logEntries.last?.migrated = true
+        logEntries.last?.isMigrated = true
     }
     
     var body: some View {

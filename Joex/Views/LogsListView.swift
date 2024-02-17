@@ -12,11 +12,11 @@ struct LogsListView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var expandedMigratedLogEntries: Bool = false
     @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.migrated == true
-    }, sort: \LogEntry.created, order: .reverse) private var logEntriesMigrated: [LogEntry]
+        logEntry.isMigrated == true
+    }, sort: \LogEntry.createdDate, order: .reverse) private var logEntriesMigrated: [LogEntry]
     @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.migrated == false
-    }, sort: \LogEntry.created, order: .reverse) private var logEntries: [LogEntry]
+        logEntry.isMigrated == false
+    }, sort: \LogEntry.createdDate, order: .reverse) private var logEntries: [LogEntry]
     
     var body: some View {
         List {
@@ -54,7 +54,7 @@ struct LogsListView: View {
                                 }
                                 
                                 Button("Recover", systemImage: "arrow.circlepath") {
-                                    logEntryMigrated.migrated = false
+                                    logEntryMigrated.isMigrated = false
                                 }
                             }
                     }

@@ -10,7 +10,7 @@ import SwiftData
 
 struct LogsToolbarView: ToolbarContent {
     @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.migrated == false
+        logEntry.isMigrated == false
     }) private var logEntries: [LogEntry]
     
     var body: some ToolbarContent {

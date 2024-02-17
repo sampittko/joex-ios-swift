@@ -10,14 +10,14 @@ import SwiftData
 
 @Model class LogEntry {
     @Attribute(.unique) public var id: String!
-    public var created: Date
-    public var migrated: Bool
+    public var createdDate: Date
+    public var isMigrated: Bool
     public var note: String
     
-    init(note: String, created: Date = .now, migrated: Bool = false) {
+    init(note: String, createdDate: Date = .now, isMigrated: Bool = false) {
         self.note = note
-        self.created = created
-        self.migrated = migrated
+        self.createdDate = createdDate
+        self.isMigrated = isMigrated
     }
 }
 

@@ -20,7 +20,7 @@ struct SettingsView: View {
     
     var body: some View {
         Form {
-            Picker("Delete migrated log after", selection: $deleteMigratedLogAfter) {
+            Picker("Delete isMigrated log after", selection: $deleteMigratedLogAfter) {
                 ForEach(DeleteMigratedLogAfter.allCases, id: \.self) { value in
                     Text(value.rawValue).tag(value.rawValue)
                 }
