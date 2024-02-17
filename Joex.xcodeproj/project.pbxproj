@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		994339102B80F31F003B1DC4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9943390F2B80F31F003B1DC4 /* SettingsView.swift */; };
 		99741DF12B726EEA008AD9FF /* LogsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99741DF02B726EEA008AD9FF /* LogsListView.swift */; };
 		99741DF32B727045008AD9FF /* NewLogEntryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99741DF22B727045008AD9FF /* NewLogEntryButtonView.swift */; };
 		99741DF52B727132008AD9FF /* LogsToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99741DF42B727132008AD9FF /* LogsToolbarView.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9943390F2B80F31F003B1DC4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		99741DF02B726EEA008AD9FF /* LogsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsListView.swift; sourceTree = "<group>"; };
 		99741DF22B727045008AD9FF /* NewLogEntryButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLogEntryButtonView.swift; sourceTree = "<group>"; };
 		99741DF42B727132008AD9FF /* LogsToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsToolbarView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				99741DF42B727132008AD9FF /* LogsToolbarView.swift */,
 				99741DF62B727238008AD9FF /* NewLogEntryNoteView.swift */,
 				99741DF82B7274D3008AD9FF /* FabButtonView.swift */,
+				9943390F2B80F31F003B1DC4 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				99741DF72B727238008AD9FF /* NewLogEntryNoteView.swift in Sources */,
 				99741DF92B7274D3008AD9FF /* FabButtonView.swift in Sources */,
 				99741DF52B727132008AD9FF /* LogsToolbarView.swift in Sources */,
+				994339102B80F31F003B1DC4 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
