@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 enum DeleteMigratedLogAfter: String, CaseIterable {
     case Immediately = "Immediately"
@@ -17,6 +18,10 @@ enum DeleteMigratedLogAfter: String, CaseIterable {
 }
 
 struct SettingsView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query(filter: #Predicate<LogEntry> { logEntry in
+        logEntry.isMigrated == true
+    }) private var logEntries: [LogEntry]
     @AppStorage("deleteMigratedLogAfter")
     private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
     
@@ -31,6 +36,9 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Settings")
+        .onDisappear {
+            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, logEntries: logEntries, modelContext: modelContext)
+        }
     }
 }
 
