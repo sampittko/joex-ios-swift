@@ -15,12 +15,12 @@ struct AddLogEntryNoteIntent: AppIntent {
     @Parameter(title: "Note")
     var note: String
     
-    func perform() async throws -> some IntentResult & ProvidesDialog {
+    func perform() async throws -> some IntentResult {
         let schema = Schema([LogEntry.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         guard let modelContainer = try? ModelContainer(for: schema, configurations: [modelConfiguration]) else {
-            return .result(dialog: "Failed to add a note")
+            return .result()
         }
 
         let context = await modelContainer.mainContext
@@ -29,6 +29,6 @@ struct AddLogEntryNoteIntent: AppIntent {
 
         context.insert(logEntryNote)
         
-        return .result(dialog: "Note added")
+        return .result()
     }
 }
