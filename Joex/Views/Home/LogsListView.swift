@@ -61,7 +61,7 @@ struct LogsListView: View {
                             }
                     }
                 }, header: {
-                    Text("Migrated logs")
+                    Text("Migrated")
                 })
             }
         }
