@@ -83,23 +83,8 @@ struct SettingsView: View {
                 if dailyMigrationReminder {
                     DatePicker("Migration reminder time", selection: $dailyMigrationReminderTimeState , displayedComponents: .hourAndMinute)
                         .onChange(of: dailyMigrationReminderTimeState) { _, newDate in
-                            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["migration"])
-                            
                             dailyMigrationReminderTime = newDate.timeIntervalSinceReferenceDate
-                            
-                            let content = UNMutableNotificationContent()
-                            content.title = "Migration"
-                            content.body = logEntries.count == 1 ? "One lonely log wants to go home" :  "Physical journal is hungry for your \(logEntries.count) logs"
-                            content.sound = UNNotificationSound.default
-                            
-                            var date = DateComponents()
-                            date.hour = Calendar.current.component(.hour, from: newDate)
-                            date.minute = Calendar.current.component(.minute, from: newDate)
-                            let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
-
-                            let request = UNNotificationRequest(identifier: "migration", content: content, trigger: trigger)
-                            
-                            UNUserNotificationCenter.current().add(request)
+                            scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: newDate)
                         }
                         .onAppear {
                             UIDatePicker.appearance().minuteInterval = 15
