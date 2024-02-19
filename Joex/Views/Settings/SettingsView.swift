@@ -74,7 +74,7 @@ struct SettingsView: View {
                             dailyMigrationReminderTime = newDate.timeIntervalSinceReferenceDate
                             dailyMigrationReminderTimeState = newDate
                             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                                if let error {
+                                if error != nil {
                                     dailyMigrationReminder = false
                                 }
                             }
@@ -86,10 +86,6 @@ struct SettingsView: View {
                             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["migration"])
                             
                             dailyMigrationReminderTime = newDate.timeIntervalSinceReferenceDate
-                            
-                            let formatter = NumberFormatter()
-                            formatter.numberStyle = .spellOut
-                            let string2 = formatter.string(from: logEntries.count as NSNumber) ?? ""
                             
                             let content = UNMutableNotificationContent()
                             content.title = "Migration"
@@ -116,7 +112,7 @@ struct SettingsView: View {
                                 if success {
                                     UNUserNotificationCenter.current().setBadgeCount(logEntries.count)
                                 }
-                                if let error {
+                                if error != nil {
                                     migrationLogsCountBadge = false
                                 }
                             }
