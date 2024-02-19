@@ -65,7 +65,7 @@ struct LogsListView: View {
                         Text(logEntryMigrated.note)
                             .foregroundColor(.secondary)
                             .lineLimit(1)
-                            .swipeActions(allowsFullSwipe: false) {
+                            .swipeActions(allowsFullSwipe: true) {
                                 Button("Delete", systemImage: "trash", role: .destructive) {
                                     modelContext.delete(logEntryMigrated)
                                 }
