@@ -12,8 +12,12 @@ func scheduleMigrationNotification(logEntriesCount: Int, notificationDate: Date,
     if (dailyMigrationReminder == false) {
         return
     }
-        
+    
     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["migration"])
+    
+    if logEntriesCount == 0 {
+        return
+    }
     
     let content = UNMutableNotificationContent()
     content.title = "Migration"
