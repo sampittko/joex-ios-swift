@@ -60,7 +60,7 @@ struct SettingsView: View {
                     }
                 }
                 Toggle("Daily reminder", isOn: $dailyMigrationReminder)
-                Toggle
+                    .disabled(true)
                 if dailyMigrationReminder {
                     DatePicker("Reminder time", selection: $dailyMigrationReminderTimeState , displayedComponents: .hourAndMinute)
                         .onChange(of: dailyMigrationReminderTimeState) { _, newDate in
