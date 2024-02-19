@@ -100,7 +100,9 @@ struct ContentView: View {
         }
         .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
             if newPhase == .inactive || newPhase == .background {
-                isAuthenticated = false
+                if (requireAuthentication == true) {
+                    isAuthenticated = false
+                }
             } else if newPhase == .active && isAuthenticated == false {
                 if (shouldReauthenticate() == true) {
                     requestAuthentication()
