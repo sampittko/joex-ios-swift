@@ -32,8 +32,8 @@ struct MigrationView: View {
         } else {
             logEntries.last!.isMigrated = true
             logEntries.last!.migratedDate = .now
-            scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
         }
+        scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
     }
     
     var body: some View {

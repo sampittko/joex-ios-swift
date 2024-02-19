@@ -21,6 +21,8 @@ struct AddLogEntryNoteIntent: AppIntent {
     private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
     @AppStorage("dailyMigrationReminder")
     private var dailyMigrationReminder: Bool = false
+    @AppStorage("migrationLogsCountBadge")
+    private var migrationLogsCountBadge: Bool = false
     
     @Parameter(title: "Note")
     var note: String
@@ -40,6 +42,8 @@ struct AddLogEntryNoteIntent: AppIntent {
         modelContext.insert(logEntryNote)
         
         scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+        
+        updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntries.count)
         
         return .result()
     }

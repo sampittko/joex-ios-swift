@@ -25,6 +25,8 @@ struct LogsListView: View {
     private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
     @AppStorage("dailyMigrationReminder")
     private var dailyMigrationReminder: Bool = false
+    @AppStorage("migrationLogsCountBadge")
+    private var migrationLogsCountBadge: Bool = false
     
     @State
     private var expandedMigratedLogEntries: Bool = false
@@ -48,6 +50,7 @@ struct LogsListView: View {
                                 Button("Delete", systemImage: "trash", role: .destructive) {
                                     modelContext.delete(logEntry)
                                     scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+                                    updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntries.count)
                                 }
                             }
                     }

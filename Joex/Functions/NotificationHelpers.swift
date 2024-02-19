@@ -29,3 +29,13 @@ func scheduleMigrationNotification(logEntriesCount: Int, notificationDate: Date,
     
     UNUserNotificationCenter.current().add(request)
 }
+
+func updateWaitingLogsCountBadge(migrationLogsCountBadge: Bool, logEntriesCount: Int) {
+    if migrationLogsCountBadge == true {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                UNUserNotificationCenter.current().setBadgeCount(logEntriesCount)
+            }
+        }
+    }
+}

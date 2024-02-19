@@ -30,42 +30,10 @@
             filePath = "Joex/Views/Home/NewLogEntryNoteView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "createNoteLogEntry()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E23A9D76-F243-4879-9258-DA38941FBD43 - c66812fa9a982a9"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Joex.NewLogEntryNoteView.handleDiscard() -&gt; ()"
-                  moduleName = "Joex"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sampittko/_dev/sampittko/Joex/Joex/Views/Home/NewLogEntryNoteView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "40"
-                  endingLineNumber = "40"
-                  offsetFromSymbolStart = "28">
-               </Location>
-               <Location
-                  uuid = "E23A9D76-F243-4879-9258-DA38941FBD43 - b97fcb428bdac395"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Joex.NewLogEntryNoteView.createNoteLogEntry() -&gt; ()"
-                  moduleName = "Joex"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sampittko/_dev/sampittko/Joex/Joex/Views/Home/NewLogEntryNoteView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "1280">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
