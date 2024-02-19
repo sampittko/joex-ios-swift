@@ -19,7 +19,7 @@ struct AddLogEntryNoteIntent: AppIntent {
     @AppStorage("migrationLogsCountBadge")
     private var migrationLogsCountBadge: Bool = false
     
-    @Parameter(title: "Note")
+    @Parameter(title: "", inputOptions: String.IntentInputOptions.init(multiline: true))
     var note: String
     
     func perform() async throws -> some IntentResult {
