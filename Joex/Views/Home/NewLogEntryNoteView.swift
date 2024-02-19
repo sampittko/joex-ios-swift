@@ -11,18 +11,27 @@ import SwiftData
 var INITIAL_NOTE: String = ""
 
 struct NewLogEntryNoteView: View {
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext)
+    private var modelContext
+    
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == false
-    }) private var logEntries: [LogEntry]
+    })
+    private var logEntries: [LogEntry]
+    
     @AppStorage("dailyMigrationReminderTime")
     private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
     @AppStorage("dailyMigrationReminder")
     private var dailyMigrationReminder: Bool = false
-    @State private var note: String = INITIAL_NOTE;
+    
+    @State
+    private var note: String = INITIAL_NOTE;
+    
+    @FocusState
+    private var keyboardFocused: Bool
+    
     public var onDiscard: () -> Void
     public var onSave: () -> Void
-    @FocusState private var keyboardFocused: Bool
     
     func createNoteLogEntry() {
         let logEntryNote = LogEntry(note: note)

@@ -9,17 +9,22 @@ import SwiftUI
 import SwiftData
 
 struct MigrationView: View {
-    @Environment(\.modelContext) private var modelContext
-    @AppStorage("deleteMigratedLogAfter")
-    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
+    @Environment(\.modelContext)
+    private var modelContext
+    @Environment(\.dismiss)
+    var dismiss
+    
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == false
-    }, sort: \LogEntry.createdDate, order: .reverse) private var logEntries: [LogEntry]
-    @Environment(\.dismiss) var dismiss
+    }, sort: \LogEntry.createdDate, order: .reverse)
+    private var logEntries: [LogEntry]
+    
     @AppStorage("dailyMigrationReminderTime")
     private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
     @AppStorage("dailyMigrationReminder")
     private var dailyMigrationReminder: Bool = false
+    @AppStorage("deleteMigratedLogAfter")
+    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
     
     func handleClick() {
         if deleteMigratedLogAfter == DeleteMigratedLogAfter.Immediately.rawValue {

@@ -6,12 +6,9 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct LogsToolbarView: ToolbarContent {
-    @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.isMigrated == false
-    }) private var logEntries: [LogEntry]
+    public var isMigrationDisabled: Bool
     
     var body: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
@@ -27,7 +24,7 @@ struct LogsToolbarView: ToolbarContent {
                 Image(systemName: "book.pages")
             }
             .accessibilityLabel("Migration")
-            .disabled(logEntries.isEmpty)
+            .disabled(isMigrationDisabled)
         }
     }
 }

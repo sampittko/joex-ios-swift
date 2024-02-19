@@ -9,48 +9,40 @@ import SwiftUI
 import SwiftData
 import UserNotifications
 
-enum DeleteMigratedLogAfter: String, CaseIterable {
-    case Immediately = "Migration"
-    case OneDay = "1 day"
-    case ThreeDays = "3 days"
-    case OneWeek = "1 week"
-    case TwoWeeks = "2 weeks"
-    case OneMonth = "1 month"
-}
-
-enum AuthenticationTimeout: String, CaseIterable {
-    case Immediately = "App close"
-    case OneMinute = "1 minute"
-    case FiveMinutes = "5 minutes"
-    case FifteenMinutes = "15 minutes"
-}
-
 struct SettingsView: View {
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext)
+    private var modelContext
+    
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == true
-    }) private var migratedLogEntries: [LogEntry]
+    })
+    private var migratedLogEntries: [LogEntry]
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == false
-    }) private var logEntries: [LogEntry]
-    @AppStorage("deleteMigratedLogAfter")
-    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
-    @AppStorage("authenticationTimeout")
-    private var authenticationTimeout: String = AuthenticationTimeout.Immediately.rawValue
+    })
+    private var logEntries: [LogEntry]
+
     @AppStorage("requireAuthentication")
     private var requireAuthentication: Bool = true
+    @AppStorage("authenticationTimeout")
+    private var authenticationTimeout: String = AuthenticationTimeout.Immediately.rawValue
+    @AppStorage("deleteMigratedLogAfter")
+    private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
     @AppStorage("dailyMigrationReminder")
     private var dailyMigrationReminder: Bool = false
-    @AppStorage("migrationLogsCountBadge")
-    private var migrationLogsCountBadge: Bool = false
     @AppStorage("dailyMigrationReminderTime")
     private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
-    @State private var dailyMigrationReminderTimeState = Date.now
+    @AppStorage("migrationLogsCountBadge")
+    private var migrationLogsCountBadge: Bool = false
+    
+    @State
+    private var dailyMigrationReminderTimeState = Date.now
     
     var body: some View {
         Form {
             Section("Privacy") {
                 Toggle("Require authentication", isOn: $requireAuthentication)
+                
                 if requireAuthentication {
                     Picker("Lock app after", selection: $authenticationTimeout) {
                         ForEach(AuthenticationTimeout.allCases, id: \.self) { value in
@@ -59,6 +51,7 @@ struct SettingsView: View {
                     }
                 }
             }
+            
             Section("Migration") {
                 Picker("Delete log after", selection: $deleteMigratedLogAfter) {
                     ForEach(DeleteMigratedLogAfter.allCases, id: \.self) { value in
@@ -66,6 +59,7 @@ struct SettingsView: View {
                     }
                 }
             }
+            
             Section("Notifications") {
                 Toggle("Daily migration reminder", isOn: $dailyMigrationReminder)
                     .onChange(of: dailyMigrationReminder) { oldValue, newValue in
@@ -80,6 +74,7 @@ struct SettingsView: View {
                             }
                         }
                     }
+                
                 if dailyMigrationReminder {
                     DatePicker("Migration reminder time", selection: $dailyMigrationReminderTimeState , displayedComponents: .hourAndMinute)
                         .onChange(of: dailyMigrationReminderTimeState) { _, newDate in
@@ -90,6 +85,7 @@ struct SettingsView: View {
                             UIDatePicker.appearance().minuteInterval = 15
                         }
                 }
+                
                 Toggle("Waiting logs count badge", isOn: $migrationLogsCountBadge)
                     .onChange(of: migrationLogsCountBadge) { oldValue, newValue in
                         if (newValue == true) {

@@ -10,7 +10,20 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext)
+    private var modelContext
+    @Environment(\.scenePhase)
+    var scenePhase
+    
+    @Query(filter: #Predicate<LogEntry> { logEntry in
+        logEntry.isMigrated == true
+    })
+    private var migratedLogEntries: [LogEntry]
+    @Query(filter: #Predicate<LogEntry> { logEntry in
+        logEntry.isMigrated == false
+    })
+    private var logEntries: [LogEntry]
+    
     @AppStorage("deleteMigratedLogAfter")
     private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
     @AppStorage("lastAuthenticated")
@@ -23,13 +36,13 @@ struct ContentView: View {
     private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
     @AppStorage("dailyMigrationReminder")
     private var dailyMigrationReminder: Bool = false
-    @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.isMigrated == true
-    }) private var logEntries: [LogEntry]
-    @Environment(\.scenePhase) var scenePhase
-    @State private var newLogEntryNote: Bool = false
-    @State private var newLogEntry: Bool = false
-    @State private var isAuthenticated: Bool = false
+    
+    @State
+    private var newLogEntryNote: Bool = false
+    @State
+    private var newLogEntry: Bool = false
+    @State
+    private var isAuthenticated: Bool = false
     
     func requestAuthentication() {
         let context = LAContext()
@@ -89,7 +102,7 @@ struct ContentView: View {
                     }
                     .navigationTitle("Logs")
                     .toolbar {
-                        LogsToolbarView()
+                        LogsToolbarView(isMigrationDisabled: logEntries.count == 0)
                     }
                     .sheet(isPresented: $newLogEntryNote, onDismiss: {
                         resetNewLogEntryNote()
@@ -116,7 +129,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, logEntries: logEntries, modelContext: modelContext, dailyMigrationReminderTime: dailyMigrationReminderTime, dailyMigrationReminder: dailyMigrationReminder)
+            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, logEntries: migratedLogEntries, modelContext: modelContext, dailyMigrationReminderTime: dailyMigrationReminderTime, dailyMigrationReminder: dailyMigrationReminder)
         }
     }
 }

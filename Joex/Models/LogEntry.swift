@@ -9,7 +9,9 @@ import Foundation
 import SwiftData
 
 @Model class LogEntry {
-    @Attribute(.unique) public var id: String!
+    @Attribute(.unique)
+    public var id: String!
+    
     public var createdDate: Date
     public var updatedDate: Date
     public var migratedDate: Date?

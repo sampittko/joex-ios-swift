@@ -9,18 +9,25 @@ import SwiftUI
 import SwiftData
 
 struct LogsListView: View {
-    @Environment(\.modelContext) private var modelContext
-    @State private var expandedMigratedLogEntries: Bool = false
+    @Environment(\.modelContext)
+    private var modelContext
+    
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == true
-    }, sort: \LogEntry.createdDate, order: .reverse) private var logEntriesMigrated: [LogEntry]
+    }, sort: \LogEntry.createdDate, order: .reverse)
+    private var migratedLogEntries: [LogEntry]
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == false
-    }, sort: \LogEntry.createdDate, order: .reverse) private var logEntries: [LogEntry]
+    }, sort: \LogEntry.createdDate, order: .reverse)
+    private var logEntries: [LogEntry]
+    
     @AppStorage("dailyMigrationReminderTime")
     private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
     @AppStorage("dailyMigrationReminder")
     private var dailyMigrationReminder: Bool = false
+    
+    @State
+    private var expandedMigratedLogEntries: Bool = false
     
     var body: some View {
         List {
@@ -47,9 +54,9 @@ struct LogsListView: View {
                 })
             }
             
-            if logEntriesMigrated.count > 0 {
+            if migratedLogEntries.count > 0 {
                 Section (isExpanded: $expandedMigratedLogEntries, content: {
-                    ForEach(logEntriesMigrated) { logEntryMigrated in
+                    ForEach(migratedLogEntries) { logEntryMigrated in
                         Text(logEntryMigrated.note)
                             .foregroundColor(.secondary)
                             .lineLimit(1)
