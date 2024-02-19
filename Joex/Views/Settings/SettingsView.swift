@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 enum DeleteMigratedLogAfter: String, CaseIterable {
     case Immediately = "Migration"
@@ -28,6 +29,9 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == true
+    }) private var migratedLogEntries: [LogEntry]
+    @Query(filter: #Predicate<LogEntry> { logEntry in
+        logEntry.isMigrated == false
     }) private var logEntries: [LogEntry]
     @AppStorage("deleteMigratedLogAfter")
     private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
@@ -37,6 +41,8 @@ struct SettingsView: View {
     private var requireAuthentication: Bool = true
     @AppStorage("dailyMigrationReminder")
     private var dailyMigrationReminder: Bool = false
+    @AppStorage("migrationLogsCountBadge")
+    private var migrationLogsCountBadge: Bool = false
     @AppStorage("dailyMigrationReminderTime")
     private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
     @State private var dailyMigrationReminderTimeState = Date.now
@@ -60,13 +66,63 @@ struct SettingsView: View {
                     }
                 }
                 Toggle("Daily reminder", isOn: $dailyMigrationReminder)
-                    .disabled(true)
+                    .onChange(of: dailyMigrationReminder) { oldValue, newValue in
+                        if (newValue == true) {
+                            let newDate = Date.now
+                            dailyMigrationReminderTime = newDate.timeIntervalSinceReferenceDate
+                            dailyMigrationReminderTimeState = newDate
+                            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                                if let error {
+                                    dailyMigrationReminder = false
+                                }
+                            }
+                        }
+                    }
                 if dailyMigrationReminder {
                     DatePicker("Reminder time", selection: $dailyMigrationReminderTimeState , displayedComponents: .hourAndMinute)
                         .onChange(of: dailyMigrationReminderTimeState) { _, newDate in
+                            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["migration"])
+                            
                             dailyMigrationReminderTime = newDate.timeIntervalSinceReferenceDate
+                            
+                            let formatter = NumberFormatter()
+                            formatter.numberStyle = .spellOut
+                            let string2 = formatter.string(from: logEntries.count as NSNumber) ?? ""
+                            
+                            let content = UNMutableNotificationContent()
+                            content.title = "Migration"
+                            content.body = logEntries.count == 1 ? "One lonely log wants to go home" :  "Physical journal is hungry for your \(logEntries.count) logs"
+                            content.sound = UNNotificationSound.default
+                            
+                            var date = DateComponents()
+                            date.hour = Calendar.current.component(.hour, from: newDate)
+                            date.minute = Calendar.current.component(.minute, from: newDate)
+                            let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+
+                            let request = UNNotificationRequest(identifier: "migration", content: content, trigger: trigger)
+                            
+                            UNUserNotificationCenter.current().add(request)
                         }
                 }
+                Toggle("Waiting logs badge", isOn: $migrationLogsCountBadge)
+                    .onChange(of: migrationLogsCountBadge) { oldValue, newValue in
+                        if (newValue == true) {
+                            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                                if success {
+                                    UNUserNotificationCenter.current().setBadgeCount(logEntries.count)
+                                }
+                                if let error {
+                                    migrationLogsCountBadge = false
+                                }
+                            }
+                        } else {
+                            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                                if success {
+                                    UNUserNotificationCenter.current().setBadgeCount(0)
+                                }
+                            }
+                        }
+                    }
             }
         }
         .navigationTitle("Settings")
@@ -75,7 +131,7 @@ struct SettingsView: View {
             dailyMigrationReminderTimeState = Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime)
         }
         .onDisappear {
-            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, logEntries: logEntries, modelContext: modelContext)
+            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, logEntries: migratedLogEntries, modelContext: modelContext)
         }
     }
 }
