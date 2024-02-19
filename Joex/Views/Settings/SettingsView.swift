@@ -72,6 +72,8 @@ struct SettingsView: View {
                                     dailyMigrationReminder = false
                                 }
                             }
+                        } else {
+                            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["migration"])
                         }
                     }
                 
