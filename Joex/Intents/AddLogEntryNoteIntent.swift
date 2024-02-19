@@ -29,20 +29,20 @@ struct AddLogEntryNoteIntent: AppIntent {
         guard let modelContainer = try? ModelContainer(for: schema, configurations: [modelConfiguration]) else {
             return .result()
         }
-        
-        let logEntryNote = LogEntry(note: note)
 
         let modelContext = await modelContainer.mainContext
+        
+        let logEntryNote = LogEntry(note: note)
 
         modelContext.insert(logEntryNote)
         
         let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
         
-        let logEntriesCount = (try? modelContext.fetchCount(descriptor)) ?? 0
+        let logEntries = (try? modelContext.fetch(descriptor)) ?? []
         
-        scheduleMigrationNotification(logEntriesCount: logEntriesCount, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+        scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
         
-        updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntriesCount)
+        updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntries.count)
         
         return .result()
     }
