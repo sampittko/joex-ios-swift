@@ -45,14 +45,12 @@ struct SettingsView: View {
         Form {
             Section("Privacy") {
                 Toggle("Require authentication", isOn: $requireAuthentication)
-                    .disabled(true)
                 if requireAuthentication {
                     Picker("Lock app after", selection: $authenticationTimeout) {
                         ForEach(AuthenticationTimeout.allCases, id: \.self) { value in
                             Text(value.rawValue).tag(value.rawValue)
                         }
                     }
-                    .disabled(true)
                 }
             }
             Section("Migration") {

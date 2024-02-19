@@ -13,6 +13,12 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @AppStorage("deleteMigratedLogAfter")
     private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
+    @AppStorage("lastAuthenticated")
+    private var lastAuthenticated: TimeInterval = Date.now.timeIntervalSinceReferenceDate
+    @AppStorage("authenticationTimeout")
+    private var authenticationTimeout: String = AuthenticationTimeout.Immediately.rawValue
+    @AppStorage("requireAuthentication")
+    private var requireAuthentication: Bool = true
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == true
     }) private var logEntries: [LogEntry]
@@ -31,6 +37,7 @@ struct ContentView: View {
                 // authentication has now completed
                 if success {
                     isAuthenticated = true
+                    lastAuthenticated = Date.now.timeIntervalSinceReferenceDate
                 } else {
                     // there was a problem
                 }
@@ -38,6 +45,29 @@ struct ContentView: View {
         } else {
             // no biometrics
         }
+    }
+    
+    func shouldReauthenticate() -> Bool {
+        if (requireAuthentication == false) {
+            return false
+        }
+        
+        let lastAuthenticatedDate = Date(timeIntervalSinceReferenceDate: lastAuthenticated)
+        
+        var reauthenticate: Bool
+        switch authenticationTimeout {
+            case AuthenticationTimeout.Immediately.rawValue:
+                reauthenticate = true
+            case AuthenticationTimeout.OneMinute.rawValue:
+                reauthenticate = lastAuthenticatedDate.distance(to: Date.now) / 60 >= 1
+            case AuthenticationTimeout.FiveMinutes.rawValue:
+                reauthenticate = lastAuthenticatedDate.distance(to: Date.now) / 300 >= 5
+            case AuthenticationTimeout.FifteenMinutes.rawValue:
+                reauthenticate = lastAuthenticatedDate.distance(to: Date.now) / 900 >= 15
+            default:
+                reauthenticate = true
+        }
+        return reauthenticate
     }
     
     func resetNewLogEntryNote() {
@@ -72,7 +102,11 @@ struct ContentView: View {
             if newPhase == .inactive || newPhase == .background {
                 isAuthenticated = false
             } else if newPhase == .active && isAuthenticated == false {
-                requestAuthentication()
+                if (shouldReauthenticate() == true) {
+                    requestAuthentication()
+                } else {
+                    isAuthenticated = true
+                }
             }
         }
         .onAppear {
