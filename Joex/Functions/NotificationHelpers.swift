@@ -17,7 +17,7 @@ func scheduleMigrationNotification(logEntriesCount: Int, notificationDate: Date,
     
     let content = UNMutableNotificationContent()
     content.title = "Migration"
-    content.body = logEntriesCount == 1 ? "One lonely log wants to go home" :  "Physical journal is hungry for your \(logEntriesCount) logs"
+    content.body = logEntriesCount == 1 ? "One log is waiting" :  "\(logEntriesCount) logs are waiting"
     content.sound = UNNotificationSound.default
     
     var date = DateComponents()
