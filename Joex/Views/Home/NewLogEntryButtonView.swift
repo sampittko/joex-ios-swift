@@ -12,17 +12,18 @@ struct NewLogEntryButtonView: View {
     @Binding public var newLogEntryNote: Bool
     
     func handleClick() {
-        newLogEntry = true
+//        newLogEntry = true
+        newLogEntryNote = true
     }
     
     var body: some View {
         FabButtonView(handleClick: { self.handleClick() }, icon: "plus", color: Color.indigo)
             .padding([.bottom], -5)
-            .confirmationDialog("New log entry type", isPresented: $newLogEntry) {
-                Button("Note") { newLogEntryNote = true }
-                Button("Cancel", role: .cancel) { newLogEntry = false }
-            } message: {
-                Text("Select type of new log entry")
-            }
+//            .confirmationDialog("New log entry type", isPresented: $newLogEntry) {
+//                Button("Note") { newLogEntryNote = true }
+//                Button("Cancel", role: .cancel) { newLogEntry = false }
+//            } message: {
+//                Text("Select type of new log entry")
+//            }
     }
 }
