@@ -6,11 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 var INITIAL_NOTE: String = ""
 
 struct NewLogEntryNoteView: View {
     @Environment(\.modelContext) private var modelContext
+    @Query(filter: #Predicate<LogEntry> { logEntry in
+        logEntry.isMigrated == false
+    }) private var logEntries: [LogEntry]
+    @AppStorage("dailyMigrationReminderTime")
+    private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
+    @AppStorage("dailyMigrationReminder")
+    private var dailyMigrationReminder: Bool = false
     @State private var note: String = INITIAL_NOTE;
     public var onDiscard: () -> Void
     public var onSave: () -> Void
@@ -19,6 +27,7 @@ struct NewLogEntryNoteView: View {
     func createNoteLogEntry() {
         let logEntryNote = LogEntry(note: note)
         modelContext.insert(logEntryNote)
+        scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
     }
     
     func handleSave() {

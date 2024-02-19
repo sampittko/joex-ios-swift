@@ -84,7 +84,7 @@ struct SettingsView: View {
                     DatePicker("Migration reminder time", selection: $dailyMigrationReminderTimeState , displayedComponents: .hourAndMinute)
                         .onChange(of: dailyMigrationReminderTimeState) { _, newDate in
                             dailyMigrationReminderTime = newDate.timeIntervalSinceReferenceDate
-                            scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: newDate)
+                            scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: newDate, dailyMigrationReminder: dailyMigrationReminder)
                         }
                         .onAppear {
                             UIDatePicker.appearance().minuteInterval = 15
@@ -117,7 +117,7 @@ struct SettingsView: View {
             dailyMigrationReminderTimeState = Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime)
         }
         .onDisappear {
-            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, logEntries: migratedLogEntries, modelContext: modelContext)
+            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, logEntries: migratedLogEntries, modelContext: modelContext, dailyMigrationReminderTime: dailyMigrationReminderTime, dailyMigrationReminder: dailyMigrationReminder)
         }
     }
 }

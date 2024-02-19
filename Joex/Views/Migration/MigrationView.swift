@@ -16,6 +16,10 @@ struct MigrationView: View {
         logEntry.isMigrated == false
     }, sort: \LogEntry.createdDate, order: .reverse) private var logEntries: [LogEntry]
     @Environment(\.dismiss) var dismiss
+    @AppStorage("dailyMigrationReminderTime")
+    private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
+    @AppStorage("dailyMigrationReminder")
+    private var dailyMigrationReminder: Bool = false
     
     func handleClick() {
         if deleteMigratedLogAfter == DeleteMigratedLogAfter.Immediately.rawValue {
@@ -23,6 +27,7 @@ struct MigrationView: View {
         } else {
             logEntries.last!.isMigrated = true
             logEntries.last!.migratedDate = .now
+            scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
         }
     }
     

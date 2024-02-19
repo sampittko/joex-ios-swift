@@ -8,7 +8,11 @@
 import Foundation
 import UserNotifications
 
-func scheduleMigrationNotification(logEntriesCount: Int, notificationDate: Date) {
+func scheduleMigrationNotification(logEntriesCount: Int, notificationDate: Date, dailyMigrationReminder: Bool) {
+    if (dailyMigrationReminder == false) {
+        return
+    }
+        
     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["migration"])
     
     let content = UNMutableNotificationContent()

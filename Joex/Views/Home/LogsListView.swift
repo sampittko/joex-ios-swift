@@ -17,6 +17,10 @@ struct LogsListView: View {
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == false
     }, sort: \LogEntry.createdDate, order: .reverse) private var logEntries: [LogEntry]
+    @AppStorage("dailyMigrationReminderTime")
+    private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
+    @AppStorage("dailyMigrationReminder")
+    private var dailyMigrationReminder: Bool = false
     
     var body: some View {
         List {
@@ -36,6 +40,7 @@ struct LogsListView: View {
                             .swipeActions(allowsFullSwipe: false) {
                                 Button("Delete", systemImage: "trash", role: .destructive) {
                                     modelContext.delete(logEntry)
+                                    scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
                                 }
                             }
                     }
@@ -57,6 +62,7 @@ struct LogsListView: View {
                                     logEntryMigrated.isMigrated = false
                                     logEntryMigrated.migratedDate = nil
                                     logEntryMigrated.recoveredDate = .now
+                                    scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
                                 }
                             }
                     }

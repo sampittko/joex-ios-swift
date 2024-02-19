@@ -19,6 +19,10 @@ struct ContentView: View {
     private var authenticationTimeout: String = AuthenticationTimeout.Immediately.rawValue
     @AppStorage("requireAuthentication")
     private var requireAuthentication: Bool = true
+    @AppStorage("dailyMigrationReminderTime")
+    private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
+    @AppStorage("dailyMigrationReminder")
+    private var dailyMigrationReminder: Bool = false
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == true
     }) private var logEntries: [LogEntry]
@@ -112,7 +116,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, logEntries: logEntries, modelContext: modelContext)
+            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, logEntries: logEntries, modelContext: modelContext, dailyMigrationReminderTime: dailyMigrationReminderTime, dailyMigrationReminder: dailyMigrationReminder)
         }
     }
 }

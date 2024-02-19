@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-func updateMigratedLogsList(deleteMigratedLogAfter: String, logEntries: [LogEntry], modelContext: ModelContext) {
+func updateMigratedLogsList(deleteMigratedLogAfter: String, logEntries: [LogEntry], modelContext: ModelContext, dailyMigrationReminderTime: TimeInterval, dailyMigrationReminder: Bool) {
     for logEntry in logEntries {
         var shouldDelete: Bool
         switch deleteMigratedLogAfter {
@@ -29,6 +29,7 @@ func updateMigratedLogsList(deleteMigratedLogAfter: String, logEntries: [LogEntr
         }
         if shouldDelete == true {
             modelContext.delete(logEntry)
+            scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
         }
     }
 }
