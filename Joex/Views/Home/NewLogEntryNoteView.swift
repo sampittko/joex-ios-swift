@@ -38,8 +38,10 @@ struct NewLogEntryNoteView: View {
     func createNoteLogEntry() {
         let logEntryNote = LogEntry(note: note)
         modelContext.insert(logEntryNote)
-        scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
-        updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntries.count)
+        let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
+        let logEntriesCount = (try? modelContext.fetchCount(descriptor)) ?? 0
+        scheduleMigrationNotification(logEntriesCount: logEntriesCount, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+        updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntriesCount)
     }
     
     func handleSave() {

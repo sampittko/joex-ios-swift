@@ -25,6 +25,8 @@ struct MigrationView: View {
     private var dailyMigrationReminder: Bool = false
     @AppStorage("deleteMigratedLogAfter")
     private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
+    @AppStorage("migrationLogsCountBadge")
+    private var migrationLogsCountBadge: Bool = false
     
     func handleClick() {
         if deleteMigratedLogAfter == DeleteMigratedLogAfter.Immediately.rawValue {
@@ -33,7 +35,10 @@ struct MigrationView: View {
             logEntries.last!.isMigrated = true
             logEntries.last!.migratedDate = .now
         }
-        scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+        let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
+        let logEntriesCount = (try? modelContext.fetchCount(descriptor)) ?? 0
+        scheduleMigrationNotification(logEntriesCount: logEntriesCount, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+        updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntriesCount)
     }
     
     var body: some View {

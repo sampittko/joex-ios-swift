@@ -49,8 +49,10 @@ struct LogsListView: View {
                             .swipeActions(allowsFullSwipe: false) {
                                 Button("Delete", systemImage: "trash", role: .destructive) {
                                     modelContext.delete(logEntry)
-                                    scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
-                                    updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntries.count)
+                                    let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
+                                    let logEntriesCount = (try? modelContext.fetchCount(descriptor)) ?? 0
+                                    scheduleMigrationNotification(logEntriesCount: logEntriesCount, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+                                    updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntriesCount)
                                 }
                             }
                     }
@@ -72,7 +74,10 @@ struct LogsListView: View {
                                     logEntryMigrated.isMigrated = false
                                     logEntryMigrated.migratedDate = nil
                                     logEntryMigrated.recoveredDate = .now
-                                    scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+                                    let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
+                                    let logEntriesCount = (try? modelContext.fetchCount(descriptor)) ?? 0
+                                    scheduleMigrationNotification(logEntriesCount: logEntriesCount, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+                                    updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntriesCount)
                                 }
                             }
                     }

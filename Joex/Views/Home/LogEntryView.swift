@@ -36,13 +36,6 @@ struct SheetView: View {
     @Binding public var editing: Bool
     public var logEntry: LogEntry
     @FocusState private var keyboardFocused: Bool
-    @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.isMigrated == false
-    }) private var logEntries: [LogEntry]
-    @AppStorage("dailyMigrationReminderTime")
-    private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
-    @AppStorage("dailyMigrationReminder")
-    private var dailyMigrationReminder: Bool = false
     
     var body: some View {
         NavigationView {
@@ -74,7 +67,6 @@ struct SheetView: View {
                         logEntry.note = updatedNote
                         logEntry.updatedDate = .now
                         editing = false
-                        scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
                     }, label: {
                         Text("Update")
                     })
