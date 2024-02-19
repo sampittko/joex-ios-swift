@@ -12,6 +12,16 @@ import SwiftData
 struct AddLogEntryNoteIntent: AppIntent {
     static let title: LocalizedStringResource = "Add a note"
     
+    @Query(filter: #Predicate<LogEntry> { logEntry in
+        logEntry.isMigrated == false
+    })
+    private var logEntries: [LogEntry]
+    
+    @AppStorage("dailyMigrationReminderTime")
+    private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
+    @AppStorage("dailyMigrationReminder")
+    private var dailyMigrationReminder: Bool = false
+    
     @Parameter(title: "Note")
     var note: String
     
@@ -23,11 +33,13 @@ struct AddLogEntryNoteIntent: AppIntent {
             return .result()
         }
 
-        let context = await modelContainer.mainContext
+        let modelContext = await modelContainer.mainContext
         
         let logEntryNote = LogEntry(note: note)
 
-        context.insert(logEntryNote)
+        modelContext.insert(logEntryNote)
+        
+        scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
         
         return .result()
     }
