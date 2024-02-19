@@ -105,6 +105,9 @@ struct SettingsView: View {
                             
                             UNUserNotificationCenter.current().add(request)
                         }
+                        .onAppear {
+                            UIDatePicker.appearance().minuteInterval = 15
+                        }
                 }
                 Toggle("Waiting logs count badge", isOn: $migrationLogsCountBadge)
                     .onChange(of: migrationLogsCountBadge) { oldValue, newValue in
