@@ -65,7 +65,9 @@ struct SettingsView: View {
                         Text(value.rawValue).tag(value.rawValue)
                     }
                 }
-                Toggle("Daily reminder", isOn: $dailyMigrationReminder)
+            }
+            Section("Notifications") {
+                Toggle("Daily migration reminder", isOn: $dailyMigrationReminder)
                     .onChange(of: dailyMigrationReminder) { oldValue, newValue in
                         if (newValue == true) {
                             let newDate = Date.now
@@ -79,7 +81,7 @@ struct SettingsView: View {
                         }
                     }
                 if dailyMigrationReminder {
-                    DatePicker("Reminder time", selection: $dailyMigrationReminderTimeState , displayedComponents: .hourAndMinute)
+                    DatePicker("Migration reminder time", selection: $dailyMigrationReminderTimeState , displayedComponents: .hourAndMinute)
                         .onChange(of: dailyMigrationReminderTimeState) { _, newDate in
                             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["migration"])
                             
@@ -104,7 +106,7 @@ struct SettingsView: View {
                             UNUserNotificationCenter.current().add(request)
                         }
                 }
-                Toggle("Waiting logs badge", isOn: $migrationLogsCountBadge)
+                Toggle("Waiting logs count badge", isOn: $migrationLogsCountBadge)
                     .onChange(of: migrationLogsCountBadge) { oldValue, newValue in
                         if (newValue == true) {
                             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
