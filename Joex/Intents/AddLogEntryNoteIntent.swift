@@ -12,11 +12,6 @@ import SwiftData
 struct AddLogEntryNoteIntent: AppIntent {
     static let title: LocalizedStringResource = "Add a note"
     
-    @Query(filter: #Predicate<LogEntry> { logEntry in
-        logEntry.isMigrated == false
-    })
-    private var logEntries: [LogEntry]
-    
     @AppStorage("dailyMigrationReminderTime")
     private var dailyMigrationReminderTime: TimeInterval = Date.now.timeIntervalSinceReferenceDate
     @AppStorage("dailyMigrationReminder")
@@ -34,16 +29,20 @@ struct AddLogEntryNoteIntent: AppIntent {
         guard let modelContainer = try? ModelContainer(for: schema, configurations: [modelConfiguration]) else {
             return .result()
         }
-
-        let modelContext = await modelContainer.mainContext
         
         let logEntryNote = LogEntry(note: note)
 
+        let modelContext = await modelContainer.mainContext
+
         modelContext.insert(logEntryNote)
         
-        scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+        let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
         
-        updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntries.count)
+        let logEntriesCount = (try? modelContext.fetchCount(descriptor)) ?? 0
+        
+        scheduleMigrationNotification(logEntriesCount: logEntriesCount, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
+        
+        updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntriesCount)
         
         return .result()
     }
