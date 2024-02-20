@@ -23,14 +23,7 @@ struct AddLogEntryNoteIntent: AppIntent {
     var note: String
     
     func perform() async throws -> some IntentResult {
-        let schema = Schema([LogEntry.self])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        guard let modelContainer = try? ModelContainer(for: schema, configurations: [modelConfiguration]) else {
-            return .result()
-        }
-
-        let modelContext = await modelContainer.mainContext
+        let modelContext = await SharedModelContainer.instance.mainContext
         
         let logEntryNote = LogEntry(note: note)
 

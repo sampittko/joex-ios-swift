@@ -16,6 +16,7 @@
 		99741DF92B7274D3008AD9FF /* FabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99741DF82B7274D3008AD9FF /* FabButtonView.swift */; };
 		997923E32B83CF77004714DA /* NotificationHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997923E22B83CF77004714DA /* NotificationHelpers.swift */; };
 		997923E62B83E1FB004714DA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997923E52B83E1FB004714DA /* Settings.swift */; };
+		998A11352B852B6A00495354 /* SharedModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A11342B852B6A00495354 /* SharedModelContainer.swift */; };
 		99D34C7D2B6686ED0095CE6C /* JoexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C7C2B6686ED0095CE6C /* JoexApp.swift */; };
 		99D34C7F2B6686ED0095CE6C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C7E2B6686ED0095CE6C /* ContentView.swift */; };
 		99D34C812B6686EE0095CE6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99D34C802B6686EE0095CE6C /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		99741DF82B7274D3008AD9FF /* FabButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FabButtonView.swift; sourceTree = "<group>"; };
 		997923E22B83CF77004714DA /* NotificationHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelpers.swift; sourceTree = "<group>"; };
 		997923E52B83E1FB004714DA /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		998A11342B852B6A00495354 /* SharedModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedModelContainer.swift; sourceTree = "<group>"; };
 		99D34C792B6686ED0095CE6C /* Joex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Joex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D34C7C2B6686ED0095CE6C /* JoexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoexApp.swift; sourceTree = "<group>"; };
 		99D34C7E2B6686ED0095CE6C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				99D34C8B2B66C52B0095CE6C /* LogEntry.swift */,
+				998A11342B852B6A00495354 /* SharedModelContainer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				997923E32B83CF77004714DA /* NotificationHelpers.swift in Sources */,
 				997923E62B83E1FB004714DA /* Settings.swift in Sources */,
 				99741DF72B727238008AD9FF /* NewLogEntryNoteView.swift in Sources */,
+				998A11352B852B6A00495354 /* SharedModelContainer.swift in Sources */,
 				99741DF92B7274D3008AD9FF /* FabButtonView.swift in Sources */,
 				99741DF52B727132008AD9FF /* LogsToolbarView.swift in Sources */,
 				994339182B8122EA003B1DC4 /* Helpers.swift in Sources */,

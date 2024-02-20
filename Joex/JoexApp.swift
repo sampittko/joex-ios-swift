@@ -13,7 +13,7 @@ struct JoexApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: LogEntry.self)
+                .modelContext(SharedModelContainer.instance.mainContext)
         }
     }
 }
