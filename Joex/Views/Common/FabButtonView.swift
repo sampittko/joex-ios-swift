@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FabButtonView: View {
+    @Environment(\.colorScheme) var colorScheme
     public var handleClick: () -> Void
     public var icon: String
     public var color: Color
@@ -19,8 +20,8 @@ struct FabButtonView: View {
             Image(systemName: icon)
                 .font(.system(size: 25).weight(.semibold))
                 .padding(24)
-                .background(color)
-                .foregroundColor(.white)
+                .background(colorScheme == .dark ? .white : color)
+                .foregroundColor(colorScheme == .dark ? color : .white)
                 .clipShape(Circle())
                 .shadow(radius: 4, x: 0, y: 4)
         }
