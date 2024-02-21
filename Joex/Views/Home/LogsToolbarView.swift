@@ -22,6 +22,7 @@ struct LogsToolbarView: ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             NavigationLink(destination: MigrationView()) {
                 Image(systemName: "book.pages")
+                    .foregroundStyle(.primary)
             }
             .accessibilityLabel("Migration")
             .disabled(isMigrationDisabled)
