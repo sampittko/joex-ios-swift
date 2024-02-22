@@ -13,16 +13,14 @@ struct LogsToolbarView: ToolbarContent {
     var body: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             NavigationLink(destination: SettingsView()) {
-                Image(systemName: "gear")
-                    .foregroundStyle(.secondary)
+                Text("Settings")
             }
             .accessibilityLabel("Settings")
         }
         
         ToolbarItem(placement: .topBarTrailing) {
             NavigationLink(destination: MigrationView()) {
-                Image(systemName: "book.pages")
-                    .foregroundStyle(.primary)
+                Text("Migration")
             }
             .accessibilityLabel("Migration")
             .disabled(isMigrationDisabled)
