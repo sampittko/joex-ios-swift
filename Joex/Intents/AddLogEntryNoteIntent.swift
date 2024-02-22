@@ -8,6 +8,7 @@
 import AppIntents
 import SwiftUI
 import SwiftData
+import FirebaseAnalytics
 
 struct AddLogEntryNoteIntent: AppIntent {
     static let title: LocalizedStringResource = "Add a note"
@@ -28,6 +29,8 @@ struct AddLogEntryNoteIntent: AppIntent {
         let logEntryNote = LogEntry(note: note)
 
         modelContext.insert(logEntryNote)
+        
+        Analytics.logEvent("new_log_entry_note_added", parameters: ["shortcut": true])
         
         let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
         

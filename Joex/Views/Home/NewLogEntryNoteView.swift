@@ -46,7 +46,7 @@ struct NewLogEntryNoteView: View {
     }
     
     func handleSave() {
-        Analytics.logEvent("new_log_entry_note_added", parameters: [:])
+        Analytics.logEvent("new_log_entry_note_added", parameters: ["shortcut": false])
         createNoteLogEntry()
         resetNote()
         onSave()
