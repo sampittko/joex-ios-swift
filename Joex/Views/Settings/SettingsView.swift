@@ -8,10 +8,13 @@
 import SwiftUI
 import SwiftData
 import UserNotifications
+import StoreKit
 
 struct SettingsView: View {
     @Environment(\.modelContext)
     private var modelContext
+    @Environment(\.requestReview)
+    var requestReview
     
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == true
@@ -107,6 +110,14 @@ struct SettingsView: View {
                             }
                         }
                     }
+            }
+            
+            Button("Rate on App Store") {
+                requestReview()
+            }
+            
+            Button("Share feedback") {
+                UIApplication.shared.open(URL(string: "mailto:sampittko@gmail.com?subject=Joex Feedback")!)
             }
         }
         .navigationTitle("Settings")
