@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import FirebaseAnalytics
 
 struct LogEntryView: View {
     @Bindable public var logEntry: LogEntry
@@ -57,6 +58,7 @@ struct SheetView: View {
                     Button(action: {
                         editing = false
                         updatedNote = logEntry.note
+                        Analytics.logEvent("log_entry_view_disappeared", parameters: ["log_entry_updated": false])
                     }, label: {
                         Text("Close")
                     })
@@ -67,6 +69,7 @@ struct SheetView: View {
                         logEntry.note = updatedNote
                         logEntry.updatedDate = .now
                         editing = false
+                        Analytics.logEvent("log_entry_view_disappeared", parameters: ["log_entry_updated": true])
                     }, label: {
                         Text("Update")
                     })
@@ -79,6 +82,7 @@ struct SheetView: View {
         }
         .onAppear {
             keyboardFocused = true
+            Analytics.logEvent("log_entry_view_appeared", parameters: [:])
         }
     }
 }

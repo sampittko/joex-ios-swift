@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAnalytics
 
 struct NewLogEntryButtonView: View {
     @Binding public var newLogEntry: Bool
@@ -14,6 +15,7 @@ struct NewLogEntryButtonView: View {
     func handleClick() {
 //        newLogEntry = true
         newLogEntryNote = true
+        Analytics.logEvent("new_log_entry_note", parameters: [:])
     }
     
     var body: some View {

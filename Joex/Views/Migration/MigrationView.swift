@@ -7,12 +7,15 @@
 
 import SwiftUI
 import SwiftData
+import FirebaseAnalytics
 
 struct MigrationView: View {
     @Environment(\.modelContext)
     private var modelContext
     @Environment(\.dismiss)
     var dismiss
+    
+    private var viewUuid: String = UUID().uuidString
     
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == false
@@ -31,9 +34,11 @@ struct MigrationView: View {
     func handleClick() {
         if deleteMigratedLogAfter == DeleteMigratedLogAfter.Immediately.rawValue {
             modelContext.delete(logEntries.last!)
+            Analytics.logEvent("log_entry_migrated", parameters: ["soft_delete": false, "migration_uuid": viewUuid])
         } else {
             logEntries.last!.isMigrated = true
             logEntries.last!.migratedDate = .now
+            Analytics.logEvent("log_entry_migrated", parameters: ["soft_delete": true, "migration_uuid": viewUuid])
         }
         let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
         let logEntriesCount = (try? modelContext.fetchCount(descriptor)) ?? 0
@@ -62,7 +67,11 @@ struct MigrationView: View {
                 }
             }
             .navigationTitle("Migration")
+            .onAppear {
+                Analytics.logEvent("migration_view_appeared", parameters: ["view_instance_uuid": viewUuid, "log_entries_count": logEntries.count])
+            }
             .onDisappear {
+                Analytics.logEvent("migration_view_disappeared", parameters: ["view_instance_uuid": viewUuid, "log_entries_count": logEntries.count])
                 dismiss()
             }
         }

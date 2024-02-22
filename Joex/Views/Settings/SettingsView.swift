@@ -9,8 +9,11 @@ import SwiftUI
 import SwiftData
 import UserNotifications
 import StoreKit
+import FirebaseAnalytics
 
 struct SettingsView: View {
+    private var viewUuid: String = UUID().uuidString
+    
     @Environment(\.modelContext)
     private var modelContext
     @Environment(\.requestReview)
@@ -113,19 +116,44 @@ struct SettingsView: View {
             }
             
             Button("Rate on App Store") {
+                Analytics.logEvent("rate_on_app_store_click", parameters: [:])
                 requestReview()
             }
             
             Button("Share feedback") {
+                Analytics.logEvent("share_feedback_click", parameters: [:])
                 UIApplication.shared.open(URL(string: "mailto:sampittko@gmail.com?subject=Joex Feedback")!)
             }
         }
         .navigationTitle("Settings")
         // Workaround from: https://www.hackingwithswift.com/forums/swiftui/dates-are-hard/24218/24246
         .onAppear {
+            Analytics.logEvent(
+                "settings_view_appeared",
+                parameters: [
+                    "view_instance_uuid": viewUuid,
+                    "require_authentication": requireAuthentication,
+                    "authentication_timeout": authenticationTimeout,
+                    "delete_migrated_log_after": deleteMigratedLogAfter,
+                    "daily_migration_reminder": dailyMigrationReminder,
+                    "daily_migration_reminder_time": dailyMigrationReminderTime,
+                    "migration_logs_count_badge": migrationLogsCountBadge
+            ])
             dailyMigrationReminderTimeState = Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime)
         }
         .onDisappear {
+            Analytics.logEvent(
+                "settings_view_disappeared",
+                parameters: [
+                    "view_instance_uuid": viewUuid,
+                    "require_authentication": requireAuthentication,
+                    "authentication_timeout": authenticationTimeout,
+                    "delete_migrated_log_after": deleteMigratedLogAfter,
+                    "daily_migration_reminder": dailyMigrationReminder,
+                    "daily_migration_reminder_time": dailyMigrationReminderTime,
+                    "migration_logs_count_badge": migrationLogsCountBadge
+                ]
+            )
             updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, migratedLogEntries: migratedLogEntries, modelContext: modelContext)
         }
     }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import FirebaseAnalytics
 
 var INITIAL_NOTE: String = ""
 
@@ -45,12 +46,14 @@ struct NewLogEntryNoteView: View {
     }
     
     func handleSave() {
+        Analytics.logEvent("new_log_entry_note_added", parameters: [:])
         createNoteLogEntry()
         resetNote()
         onSave()
     }
     
     func handleDiscard() {
+        Analytics.logEvent("new_log_entry_note_discarded", parameters: [:])
         resetNote()
         onDiscard()
     }

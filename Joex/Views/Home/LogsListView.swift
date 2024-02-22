@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import FirebaseAnalytics
 
 struct LogsListView: View {
     @Environment(\.modelContext)
@@ -49,6 +50,7 @@ struct LogsListView: View {
                             .swipeActions(allowsFullSwipe: false) {
                                 Button("Delete", systemImage: "trash", role: .destructive) {
                                     modelContext.delete(logEntry)
+                                    Analytics.logEvent("log_entry_deleted", parameters: [:])
                                     let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
                                     let logEntriesCount = (try? modelContext.fetchCount(descriptor)) ?? 0
                                     scheduleMigrationNotification(logEntriesCount: logEntriesCount, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
@@ -67,10 +69,12 @@ struct LogsListView: View {
                             .lineLimit(1)
                             .swipeActions(allowsFullSwipe: true) {
                                 Button("Delete", systemImage: "trash", role: .destructive) {
+                                    Analytics.logEvent("migrated_log_entry_deleted", parameters: [:])
                                     modelContext.delete(logEntryMigrated)
                                 }
                                 
                                 Button("Recover", systemImage: "arrow.circlepath") {
+                                    Analytics.logEvent("migrated_log_entry_recovered", parameters: [:])
                                     logEntryMigrated.isMigrated = false
                                     logEntryMigrated.migratedDate = nil
                                     logEntryMigrated.recoveredDate = .now
