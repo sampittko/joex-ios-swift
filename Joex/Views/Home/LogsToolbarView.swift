@@ -15,14 +15,12 @@ struct LogsToolbarView: ToolbarContent {
             NavigationLink(destination: SettingsView()) {
                 Text("Settings")
             }
-            .accessibilityLabel("Settings")
         }
         
         ToolbarItem(placement: .topBarTrailing) {
             NavigationLink(destination: MigrationView()) {
                 Text("Migration")
             }
-            .accessibilityLabel("Migration")
             .disabled(isMigrationDisabled)
         }
     }
