@@ -13,7 +13,7 @@ struct ContentView: View {
     @Environment(\.modelContext)
     private var modelContext
     @Environment(\.scenePhase)
-    var scenePhase
+    private var scenePhase
     
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == true
@@ -60,29 +60,6 @@ struct ContentView: View {
         }
     }
     
-    func shouldReauthenticate() -> Bool {
-        if (requireAuthentication == false) {
-            return false
-        }
-        
-        let lastAuthenticatedDate = Date(timeIntervalSinceReferenceDate: lastAuthenticated)
-        
-        var reauthenticate: Bool
-        switch authenticationTimeout {
-            case AuthenticationTimeout.Immediately.rawValue:
-                reauthenticate = true
-            case AuthenticationTimeout.OneMinute.rawValue:
-                reauthenticate = lastAuthenticatedDate.distance(to: Date.now) / 60 >= 1
-            case AuthenticationTimeout.FiveMinutes.rawValue:
-                reauthenticate = lastAuthenticatedDate.distance(to: Date.now) / 300 >= 5
-            case AuthenticationTimeout.FifteenMinutes.rawValue:
-                reauthenticate = lastAuthenticatedDate.distance(to: Date.now) / 900 >= 15
-            default:
-                reauthenticate = true
-        }
-        return reauthenticate
-    }
-    
     func resetNewLogEntryNote() {
         newLogEntry = false
         newLogEntryNote = false
@@ -117,7 +94,7 @@ struct ContentView: View {
                     isAuthenticated = false
                 }
             } else if newPhase == .active && isAuthenticated == false {
-                if (shouldReauthenticate() == true) {
+                if (shouldReauthenticate(lastAuthenticated: lastAuthenticated, requireAuthentication: requireAuthentication, authenticationTimeout: authenticationTimeout) == true) {
                     requestAuthentication()
                 } else {
                     isAuthenticated = true
@@ -125,7 +102,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, migratedLogEntries: migratedLogEntries, modelContext: modelContext)
+            migratedLogsAutoDelete(deleteMigratedLogAfter: deleteMigratedLogAfter, migratedLogEntries: migratedLogEntries, modelContext: modelContext)
         }
     }
 }

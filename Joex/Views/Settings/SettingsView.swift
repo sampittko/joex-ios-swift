@@ -17,7 +17,7 @@ struct SettingsView: View {
     @Environment(\.modelContext)
     private var modelContext
     @Environment(\.requestReview)
-    var requestReview
+    private var requestReview
     
     @Query(filter: #Predicate<LogEntry> { logEntry in
         logEntry.isMigrated == true
@@ -79,7 +79,7 @@ struct SettingsView: View {
                                 }
                             }
                         } else {
-                            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["migration"])
+                            clearMigrationNotifications()
                         }
                     }
                 
@@ -122,7 +122,7 @@ struct SettingsView: View {
             
             Button("Share feedback") {
                 Analytics.logEvent("share_feedback_click", parameters: [:])
-                UIApplication.shared.open(URL(string: "mailto:sampittko@gmail.com?subject=Joex Feedback")!)
+                UIApplication.shared.open(URL(string: "mailto:\(CONTACT_EMAIL)?subject=\(CONTACT_SUBJECT)")!)
             }
         }
         .navigationTitle("Settings")
@@ -154,7 +154,7 @@ struct SettingsView: View {
                     "migration_logs_count_badge": migrationLogsCountBadge
                 ]
             )
-            updateMigratedLogsList(deleteMigratedLogAfter: deleteMigratedLogAfter, migratedLogEntries: migratedLogEntries, modelContext: modelContext)
+            migratedLogsAutoDelete(deleteMigratedLogAfter: deleteMigratedLogAfter, migratedLogEntries: migratedLogEntries, modelContext: modelContext)
         }
     }
 }

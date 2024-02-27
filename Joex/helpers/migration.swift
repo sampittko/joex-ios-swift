@@ -1,5 +1,5 @@
 //
-//  updateMigratedLogsList.swift
+//  migration.swift
 //  Joex
 //
 //  Created by Samuel Pitoňák on 17/02/2024.
@@ -8,9 +8,10 @@
 import Foundation
 import SwiftData
 
-func updateMigratedLogsList(deleteMigratedLogAfter: String, migratedLogEntries: [LogEntry], modelContext: ModelContext) {
+func migratedLogsAutoDelete(deleteMigratedLogAfter: String, migratedLogEntries: [LogEntry], modelContext: ModelContext) {
     for logEntry in migratedLogEntries {
         var shouldDelete: Bool
+        
         switch deleteMigratedLogAfter {
             case DeleteMigratedLogAfter.Immediately.rawValue:
                 shouldDelete = true
@@ -27,6 +28,7 @@ func updateMigratedLogsList(deleteMigratedLogAfter: String, migratedLogEntries: 
             default:
                 shouldDelete = false
         }
+        
         if shouldDelete == true {
             modelContext.delete(logEntry)
         }

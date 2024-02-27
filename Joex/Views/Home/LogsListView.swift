@@ -53,8 +53,12 @@ struct LogsListView: View {
                                     Analytics.logEvent("log_entry_deleted", parameters: [:])
                                     let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
                                     let logEntriesCount = (try? modelContext.fetchCount(descriptor)) ?? 0
-                                    scheduleMigrationNotification(logEntriesCount: logEntriesCount, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
-                                    updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntriesCount)
+                                    handleNotificationUpdates(
+                                        logEntriesCount: logEntriesCount,
+                                        notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime),
+                                        dailyMigrationReminder: dailyMigrationReminder,
+                                        migrationLogsCountBadge: migrationLogsCountBadge
+                                    )
                                 }
                             }
                     }
@@ -80,8 +84,12 @@ struct LogsListView: View {
                                     logEntryMigrated.recoveredDate = .now
                                     let descriptor = FetchDescriptor<LogEntry>(predicate: #Predicate { $0.isMigrated == false })
                                     let logEntriesCount = (try? modelContext.fetchCount(descriptor)) ?? 0
-                                    scheduleMigrationNotification(logEntriesCount: logEntriesCount, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
-                                    updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntriesCount)
+                                    handleNotificationUpdates(
+                                        logEntriesCount: logEntriesCount,
+                                        notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime),
+                                        dailyMigrationReminder: dailyMigrationReminder,
+                                        migrationLogsCountBadge: migrationLogsCountBadge
+                                    )
                                 }
                             }
                     }

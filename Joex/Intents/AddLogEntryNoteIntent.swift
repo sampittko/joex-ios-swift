@@ -36,9 +36,12 @@ struct AddLogEntryNoteIntent: AppIntent {
         
         let logEntries = (try? modelContext.fetch(descriptor)) ?? []
         
-        scheduleMigrationNotification(logEntriesCount: logEntries.count, notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime), dailyMigrationReminder: dailyMigrationReminder)
-        
-        updateWaitingLogsCountBadge(migrationLogsCountBadge: migrationLogsCountBadge, logEntriesCount: logEntries.count)
+        handleNotificationUpdates(
+            logEntriesCount: logEntries.count,
+            notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime),
+            dailyMigrationReminder: dailyMigrationReminder,
+            migrationLogsCountBadge: migrationLogsCountBadge
+        )
         
         return .result()
     }
