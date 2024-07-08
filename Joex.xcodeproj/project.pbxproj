@@ -59,6 +59,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		991542402C3C4FA0007143DC /* Joex.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joex.entitlements; sourceTree = "<group>"; };
 		9943390F2B80F31F003B1DC4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		994339172B8122EA003B1DC4 /* migration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = migration.swift; sourceTree = "<group>"; };
 		99741DF02B726EEA008AD9FF /* LogsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsListView.swift; sourceTree = "<group>"; };
@@ -197,6 +198,7 @@
 		99D34C7B2B6686ED0095CE6C /* Joex */ = {
 			isa = PBXGroup;
 			children = (
+				991542402C3C4FA0007143DC /* Joex.entitlements */,
 				999DF26C2B87804D00D4B051 /* GoogleService-Info.plist */,
 				997923E42B83E1EB004714DA /* constants */,
 				994339162B8122D4003B1DC4 /* helpers */,
@@ -525,6 +527,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Joex/Joex.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -562,6 +565,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Joex/Joex.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Joex/Preview Content\"";
