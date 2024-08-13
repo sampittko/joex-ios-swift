@@ -26,39 +26,39 @@ struct ContentView: View {
     
     @AppStorage("deleteMigratedLogAfter")
     private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
-    @AppStorage("lastAuthenticated")
-    private var lastAuthenticated: TimeInterval = Date.now.timeIntervalSinceReferenceDate
-    @AppStorage("authenticationTimeout")
-    private var authenticationTimeout: String = AuthenticationTimeout.Immediately.rawValue
-    @AppStorage("requireAuthentication")
-    private var requireAuthentication: Bool = true
+//    @AppStorage("lastAuthenticated")
+//    private var lastAuthenticated: TimeInterval = Date.now.timeIntervalSinceReferenceDate
+//    @AppStorage("authenticationTimeout")
+//    private var authenticationTimeout: String = AuthenticationTimeout.Immediately.rawValue
+//    @AppStorage("requireAuthentication")
+//    private var requireAuthentication: Bool = true
     
     @State
     private var newLogEntryNote: Bool = false
     @State
     private var newLogEntry: Bool = false
-    @State
-    private var isAuthenticated: Bool = false
+//    @State
+//    private var isAuthenticated: Bool = false
     
-    func requestAuthentication() {
-        let context = LAContext()
-        var error: NSError?
-        
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "A way to protect log entries you enter into the application."
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
-                // authentication has now completed
-                if success {
-                    isAuthenticated = true
-                    lastAuthenticated = Date.now.timeIntervalSinceReferenceDate
-                } else {
-                    // there was a problem
-                }
-            }
-        } else {
-            // no biometrics
-        }
-    }
+//    func requestAuthentication() {
+//        let context = LAContext()
+//        var error: NSError?
+//        
+//        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+//            let reason = "A way to protect log entries you enter into the application."
+//            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+//                // authentication has now completed
+//                if success {
+//                    isAuthenticated = true
+//                    lastAuthenticated = Date.now.timeIntervalSinceReferenceDate
+//                } else {
+//                    // there was a problem
+//                }
+//            }
+//        } else {
+//            // no biometrics
+//        }
+//    }
     
     func resetNewLogEntryNote() {
         newLogEntry = false
@@ -67,7 +67,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            if isAuthenticated {
+//            if isAuthenticated {
                 NavigationStack {
                     ZStack(alignment: .bottom) {
                         LogsListView()
@@ -86,21 +86,21 @@ struct ContentView: View {
                         )
                     })
                 }
-            }
+//            }
         }
-        .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
-            if newPhase == .inactive || newPhase == .background {
-                if (requireAuthentication == true) {
-                    isAuthenticated = false
-                }
-            } else if newPhase == .active && isAuthenticated == false {
-                if (shouldReauthenticate(lastAuthenticated: lastAuthenticated, requireAuthentication: requireAuthentication, authenticationTimeout: authenticationTimeout) == true) {
-                    requestAuthentication()
-                } else {
-                    isAuthenticated = true
-                }
-            }
-        }
+//        .onChange(of: scenePhase, initial: true) { oldPhase, newPhase in
+//            if newPhase == .inactive || newPhase == .background {
+//                if (requireAuthentication == true) {
+//                    isAuthenticated = false
+//                }
+//            } else if newPhase == .active && isAuthenticated == false {
+//                if (shouldReauthenticate(lastAuthenticated: lastAuthenticated, requireAuthentication: requireAuthentication, authenticationTimeout: authenticationTimeout) == true) {
+//                    requestAuthentication()
+//                } else {
+//                    isAuthenticated = true
+//                }
+//            }
+//        }
         .onAppear {
             migratedLogsAutoDelete(deleteMigratedLogAfter: deleteMigratedLogAfter, migratedLogEntries: migratedLogEntries, modelContext: modelContext)
         }

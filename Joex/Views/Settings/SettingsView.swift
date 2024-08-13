@@ -28,10 +28,10 @@ struct SettingsView: View {
     })
     private var logEntries: [LogEntry]
 
-    @AppStorage("requireAuthentication")
-    private var requireAuthentication: Bool = true
-    @AppStorage("authenticationTimeout")
-    private var authenticationTimeout: String = AuthenticationTimeout.Immediately.rawValue
+//    @AppStorage("requireAuthentication")
+//    private var requireAuthentication: Bool = true
+//    @AppStorage("authenticationTimeout")
+//    private var authenticationTimeout: String = AuthenticationTimeout.Immediately.rawValue
     @AppStorage("deleteMigratedLogAfter")
     private var deleteMigratedLogAfter: String = DeleteMigratedLogAfter.ThreeDays.rawValue
     @AppStorage("dailyMigrationReminder")
@@ -46,17 +46,17 @@ struct SettingsView: View {
     
     var body: some View {
         Form {
-            Section("Privacy") {
-                Toggle("Require authentication", isOn: $requireAuthentication)
-                
-                if requireAuthentication {
-                    Picker("Lock app after", selection: $authenticationTimeout) {
-                        ForEach(AuthenticationTimeout.allCases, id: \.self) { value in
-                            Text(value.rawValue).tag(value.rawValue)
-                        }
-                    }
-                }
-            }
+//            Section("Privacy") {
+//                Toggle("Require authentication", isOn: $requireAuthentication)
+//                
+//                if requireAuthentication {
+//                    Picker("Lock app after", selection: $authenticationTimeout) {
+//                        ForEach(AuthenticationTimeout.allCases, id: \.self) { value in
+//                            Text(value.rawValue).tag(value.rawValue)
+//                        }
+//                    }
+//                }
+//            }
             
             Section("Migration") {
                 Picker("Delete log after", selection: $deleteMigratedLogAfter) {
@@ -132,8 +132,8 @@ struct SettingsView: View {
                 "settings_view_appeared",
                 parameters: [
                     "view_instance_uuid": viewUuid,
-                    "require_authentication": requireAuthentication,
-                    "authentication_timeout": authenticationTimeout,
+//                    "require_authentication": requireAuthentication,
+//                    "authentication_timeout": authenticationTimeout,
                     "delete_migrated_log_after": deleteMigratedLogAfter,
                     "daily_migration_reminder": dailyMigrationReminder,
                     "daily_migration_reminder_time": dailyMigrationReminderTime,
@@ -146,8 +146,8 @@ struct SettingsView: View {
                 "settings_view_disappeared",
                 parameters: [
                     "view_instance_uuid": viewUuid,
-                    "require_authentication": requireAuthentication,
-                    "authentication_timeout": authenticationTimeout,
+//                    "require_authentication": requireAuthentication,
+//                    "authentication_timeout": authenticationTimeout,
                     "delete_migrated_log_after": deleteMigratedLogAfter,
                     "daily_migration_reminder": dailyMigrationReminder,
                     "daily_migration_reminder_time": dailyMigrationReminderTime,
