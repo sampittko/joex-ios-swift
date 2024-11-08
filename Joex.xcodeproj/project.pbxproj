@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22D1F64E2CDE104C00F5B1C2 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D1F64D2CDE104C00F5B1C2 /* LogManager.swift */; };
+		22D1F6502CDE211E00F5B1C2 /* LogEntrySheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D1F64F2CDE211E00F5B1C2 /* LogEntrySheetView.swift */; };
 		994339102B80F31F003B1DC4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9943390F2B80F31F003B1DC4 /* SettingsView.swift */; };
 		994339182B8122EA003B1DC4 /* migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994339172B8122EA003B1DC4 /* migration.swift */; };
 		99741DF12B726EEA008AD9FF /* LogsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99741DF02B726EEA008AD9FF /* LogsListView.swift */; };
@@ -59,6 +61,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22D1F64D2CDE104C00F5B1C2 /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
+		22D1F64F2CDE211E00F5B1C2 /* LogEntrySheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntrySheetView.swift; sourceTree = "<group>"; };
 		991542402C3C4FA0007143DC /* Joex.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joex.entitlements; sourceTree = "<group>"; };
 		9943390F2B80F31F003B1DC4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		994339172B8122EA003B1DC4 /* migration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = migration.swift; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 		994339132B811DF4003B1DC4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				22D1F64F2CDE211E00F5B1C2 /* LogEntrySheetView.swift */,
 				99741DF02B726EEA008AD9FF /* LogsListView.swift */,
 				99D34C8F2B66DADF0095CE6C /* LogEntryView.swift */,
 				99741DF42B727132008AD9FF /* LogsToolbarView.swift */,
@@ -148,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				99741DF82B7274D3008AD9FF /* FabButtonView.swift */,
+				22D1F64D2CDE104C00F5B1C2 /* LogManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -378,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D1F6502CDE211E00F5B1C2 /* LogEntrySheetView.swift in Sources */,
 				99741DF12B726EEA008AD9FF /* LogsListView.swift in Sources */,
 				99D34C902B66DADF0095CE6C /* LogEntryView.swift in Sources */,
 				99BACECD2B8CE24300AD6DE2 /* contact.swift in Sources */,
@@ -394,6 +401,7 @@
 				998A11352B852B6A00495354 /* SharedModelContainer.swift in Sources */,
 				99741DF92B7274D3008AD9FF /* FabButtonView.swift in Sources */,
 				99741DF52B727132008AD9FF /* LogsToolbarView.swift in Sources */,
+				22D1F64E2CDE104C00F5B1C2 /* LogManager.swift in Sources */,
 				994339182B8122EA003B1DC4 /* migration.swift in Sources */,
 				994339102B80F31F003B1DC4 /* SettingsView.swift in Sources */,
 				99BACECB2B8CDD1100AD6DE2 /* authentication.swift in Sources */,

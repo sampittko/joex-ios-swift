@@ -1,15 +1,9 @@
-//
-//  NewLogEntryNoteView.swift
-//  Joex
-//
-//  Created by Samuel Pitoňák on 06/02/2024.
-//
-
 import SwiftUI
 import SwiftData
 import FirebaseAnalytics
 
-var INITIAL_NOTE: String = ""
+// Constants
+private let INITIAL_NOTE = ""
 
 struct NewLogEntryNoteView: View {
     @Environment(\.modelContext)
@@ -66,40 +60,36 @@ struct NewLogEntryNoteView: View {
         note = INITIAL_NOTE
     }
     
+    private var SaveButton: some View {
+        Button(action: handleSave) {
+            Text("Save")
+        }
+        .disabled(note.isEmpty)
+        .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.capsule)
+        .accessibilityLabel("Save note")
+    }
+    
+    private var DiscardButton: some View {
+        Button(action: handleDiscard) {
+            Text("Discard")
+        }
+        .accessibilityLabel("Discard note")
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
                 TextEditor(text: $note)
                     .padding()
                     .focused($keyboardFocused)
-                    .overlay {
-                        if note.isEmpty {
-                            Text("<- start typing")
-                                .padding()
-                                .position(x: 85, y: 33)
-                                .opacity(0.25)
-                        }
-                    }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        handleDiscard()
-                    }, label: {
-                        Text("Discard")
-                    })
-                    .accessibilityLabel("Discard note")
+                    DiscardButton
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        handleSave()
-                    }, label: {
-                        Text("Save")
-                    })
-                    .disabled(note.isEmpty)
-                    .buttonStyle(.borderedProminent)
-                    .buttonBorderShape(.capsule)
-                    .accessibilityLabel("Save note")
+                    SaveButton
                 }
             }
         }

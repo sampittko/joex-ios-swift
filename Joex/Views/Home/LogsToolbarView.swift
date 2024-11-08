@@ -1,27 +1,31 @@
-//
-//  LogsToolbarView.swift
-//  Joex
-//
-//  Created by Samuel Pitoňák on 06/02/2024.
-//
-
 import SwiftUI
 
 struct LogsToolbarView: ToolbarContent {
-    public var isMigrationDisabled: Bool
+    private static let SETTINGS_TITLE = "Settings"
+    private static let MIGRATION_TITLE = "Migration"
+    
+    var isMigrationDisabled: Bool
+    
+    private var settingsLink: some View {
+        NavigationLink(destination: SettingsView()) {
+            Text(Self.SETTINGS_TITLE)
+        }
+    }
+    
+    private var migrationLink: some View {
+        NavigationLink(destination: MigrationView()) {
+            Text(Self.MIGRATION_TITLE)
+        }
+        .disabled(isMigrationDisabled)
+    }
     
     var body: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            NavigationLink(destination: SettingsView()) {
-                Text("Settings")
-            }
+            settingsLink
         }
         
         ToolbarItem(placement: .topBarTrailing) {
-            NavigationLink(destination: MigrationView()) {
-                Text("Migration")
-            }
-            .disabled(isMigrationDisabled)
+            migrationLink
         }
     }
 }
