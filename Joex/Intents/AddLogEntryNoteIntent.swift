@@ -36,7 +36,7 @@ struct AddLogEntryNoteIntent: AppIntent {
         
         let logEntries = (try? modelContext.fetch(descriptor)) ?? []
         
-        handleNotificationUpdates(
+        NotificationsManager.shared.handleNotificationUpdates(
             logEntriesCount: logEntries.count,
             notificationDate: Date(timeIntervalSinceReferenceDate: dailyMigrationReminderTime),
             dailyMigrationReminder: dailyMigrationReminder,

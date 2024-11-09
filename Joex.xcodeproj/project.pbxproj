@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		22D1F64E2CDE104C00F5B1C2 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D1F64D2CDE104C00F5B1C2 /* LogManager.swift */; };
+		22D1F64E2CDE104C00F5B1C2 /* logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D1F64D2CDE104C00F5B1C2 /* logs.swift */; };
 		22D1F6502CDE211E00F5B1C2 /* LogEntrySheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D1F64F2CDE211E00F5B1C2 /* LogEntrySheetView.swift */; };
 		994339102B80F31F003B1DC4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9943390F2B80F31F003B1DC4 /* SettingsView.swift */; };
 		994339182B8122EA003B1DC4 /* migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994339172B8122EA003B1DC4 /* migration.swift */; };
@@ -20,7 +20,6 @@
 		997923E62B83E1FB004714DA /* settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997923E52B83E1FB004714DA /* settings.swift */; };
 		998A11352B852B6A00495354 /* SharedModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A11342B852B6A00495354 /* SharedModelContainer.swift */; };
 		999DF26D2B87804D00D4B051 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 999DF26C2B87804D00D4B051 /* GoogleService-Info.plist */; };
-		99BACECB2B8CDD1100AD6DE2 /* authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BACECA2B8CDD1100AD6DE2 /* authentication.swift */; };
 		99BACECD2B8CE24300AD6DE2 /* contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BACECC2B8CE24300AD6DE2 /* contact.swift */; };
 		99D34C7D2B6686ED0095CE6C /* JoexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C7C2B6686ED0095CE6C /* JoexApp.swift */; };
 		99D34C7F2B6686ED0095CE6C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D34C7E2B6686ED0095CE6C /* ContentView.swift */; };
@@ -61,7 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		22D1F64D2CDE104C00F5B1C2 /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
+		22D1F64D2CDE104C00F5B1C2 /* logs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = logs.swift; sourceTree = "<group>"; };
 		22D1F64F2CDE211E00F5B1C2 /* LogEntrySheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEntrySheetView.swift; sourceTree = "<group>"; };
 		991542402C3C4FA0007143DC /* Joex.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Joex.entitlements; sourceTree = "<group>"; };
 		9943390F2B80F31F003B1DC4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -75,7 +74,6 @@
 		997923E52B83E1FB004714DA /* settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settings.swift; sourceTree = "<group>"; };
 		998A11342B852B6A00495354 /* SharedModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedModelContainer.swift; sourceTree = "<group>"; };
 		999DF26C2B87804D00D4B051 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		99BACECA2B8CDD1100AD6DE2 /* authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = authentication.swift; sourceTree = "<group>"; };
 		99BACECC2B8CE24300AD6DE2 /* contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = contact.swift; sourceTree = "<group>"; };
 		99D34C792B6686ED0095CE6C /* Joex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Joex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99D34C7C2B6686ED0095CE6C /* JoexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoexApp.swift; sourceTree = "<group>"; };
@@ -153,7 +151,6 @@
 			isa = PBXGroup;
 			children = (
 				99741DF82B7274D3008AD9FF /* FabButtonView.swift */,
-				22D1F64D2CDE104C00F5B1C2 /* LogManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -171,7 +168,7 @@
 			children = (
 				994339172B8122EA003B1DC4 /* migration.swift */,
 				997923E22B83CF77004714DA /* notifications.swift */,
-				99BACECA2B8CDD1100AD6DE2 /* authentication.swift */,
+				22D1F64D2CDE104C00F5B1C2 /* logs.swift */,
 			);
 			path = helpers;
 			sourceTree = "<group>";
@@ -401,10 +398,9 @@
 				998A11352B852B6A00495354 /* SharedModelContainer.swift in Sources */,
 				99741DF92B7274D3008AD9FF /* FabButtonView.swift in Sources */,
 				99741DF52B727132008AD9FF /* LogsToolbarView.swift in Sources */,
-				22D1F64E2CDE104C00F5B1C2 /* LogManager.swift in Sources */,
+				22D1F64E2CDE104C00F5B1C2 /* logs.swift in Sources */,
 				994339182B8122EA003B1DC4 /* migration.swift in Sources */,
 				994339102B80F31F003B1DC4 /* SettingsView.swift in Sources */,
-				99BACECB2B8CDD1100AD6DE2 /* authentication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

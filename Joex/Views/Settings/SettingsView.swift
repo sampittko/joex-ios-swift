@@ -92,7 +92,7 @@ private extension SettingsView {
         if isEnabled {
             setupNewReminder()
         } else {
-            clearMigrationNotifications()
+            NotificationsManager.shared.clearMigrationNotifications()
         }
     }
     
@@ -106,7 +106,7 @@ private extension SettingsView {
     
     func handleReminderTimeChange(oldValue: Date, newDate: Date) {
         dailyMigrationReminderTime = newDate.timeIntervalSinceReferenceDate
-        scheduleMigrationNotification(
+        NotificationsManager.shared.scheduleMigrationNotification(
             logEntriesCount: logEntries.count,
             notificationDate: newDate,
             dailyMigrationReminder: dailyMigrationReminder
@@ -146,7 +146,7 @@ private extension SettingsView {
     
     func onDisappearHandler() {
         logSettingsViewEvent("settings_view_disappeared")
-        migratedLogsAutoDelete(
+        MigrationManager.shared.handleMigratedLogsAutoDelete(
             deleteMigratedLogAfter: deleteMigratedLogAfter,
             migratedLogEntries: migratedLogEntries,
             modelContext: modelContext
